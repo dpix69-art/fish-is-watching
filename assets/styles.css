@@ -98,6 +98,15 @@ header {
   /* text-decoration: underline; */
 }
 
+.header-nav a {
+  font-size: 20px;
+  color: #050405;
+}
+
+.header-nav a:hover {
+  color: #666666;
+}
+
 main {
   max-width: 1440px;
   margin: 0 auto;
