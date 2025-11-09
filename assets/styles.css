@@ -65,7 +65,7 @@ header {
 .header-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 32px;
 }
 
@@ -79,7 +79,7 @@ header {
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 4px;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 }
 
 .site-tagline {
