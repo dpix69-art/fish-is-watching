@@ -24,7 +24,7 @@ function renderEvents(events) {
     if (currentYear !== event.year) {
       const yearDivider = document.createElement('div');
       yearDivider.className = 'year-divider';
-      yearDivider.textContent = `-- ${event.year}`;
+      yearDivider.textContent = `— ${event.year}`;
       container.appendChild(yearDivider);
       currentYear = event.year;
     }
