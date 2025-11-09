@@ -93,7 +93,7 @@ header {
   gap: 24px;
   font-size: 16px;
   font-style: italic;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 main {
