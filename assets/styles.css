@@ -180,6 +180,13 @@ main {
 }
 
 
+.b-container {
+  display: flex;
+  flex-direction: space-between;
+  gap: 8px;
+}
+
+
 .hero-right {
   display: flex;
   flex-direction: column;
