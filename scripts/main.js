@@ -48,11 +48,11 @@ function renderEvents(events) {
     footer.className = 'event-footer';
 
     const button = document.createElement('a');
-    button.href = event.icsFile;
-    button.className = 'button';
-    button.textContent = 'Remind me';
-    button.download = `${event.slug}.ics`;
-    button.setAttribute('aria-label', `Download calendar reminder for ${event.title}`);
+    // button.href = event.icsFile;
+    // button.className = 'button';
+    // button.textContent = 'Remind me';
+    // button.download = `${event.slug}.ics`;
+    // button.setAttribute('aria-label', `Download calendar reminder for ${event.title}`);
 
     const meta = document.createElement('p');
     meta.className = 'event-meta';
