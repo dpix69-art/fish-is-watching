@@ -263,7 +263,7 @@ main {
 }
 
 .quote {
-  margin-right: 380px;
+  margin-right: 250px;
   padding: 80px 0;
   display: flex;
   justify-content: flex-end;
@@ -282,7 +282,7 @@ blockquote p {
 }
 
 blockquote p:last-of-type {
-  margin-bottom: 24px;
+  margin-bottom: 0px;
 }
 
 cite {
@@ -306,12 +306,12 @@ footer {
 .footer-nav {
   display: flex;
   gap: 24px;
-  font-size: 20px;
+  font-size: 16px;
   margin: 0 auto;
 }
 
 .copyright {
-  font-size: 20px;
+  font-size: 16px;
   color: #666666;
   margin: 0 auto;
 }
@@ -354,7 +354,8 @@ footer {
   }
 
   .manifest {
-    font-size: 16px;
+    font-size: 20px;
+    max-width: 200px;
   }
 
   .event-footer {
