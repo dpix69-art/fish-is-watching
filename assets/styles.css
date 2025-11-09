@@ -93,7 +93,7 @@ header {
 .header-nav {
   display: flex;
   gap: 24px;
-  font-size: 16px;
+  font-size: 20px;
   font-style: italic;
   /* text-decoration: underline; */
 }
