@@ -129,7 +129,8 @@ main {
   color: #ffffff;
   padding: 16px 32px;
   border-radius: 9999px;
-  font-size: 16px;
+  font-size: 20px;
+  font-style: italic;
   font-weight: 400;
   text-decoration: none;
   border: none;
