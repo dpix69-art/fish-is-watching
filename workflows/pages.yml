@@ -24,17 +24,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Если у тебя нет сборки — пропусти шаги build. Мы грузим статический контент как есть.
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Папка с сайтом. Для твоей структуры это корень репозитория.
-          path: "."
+          path: "."   # если index.html в корне; поменяй путь при необходимости
 
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
-        
