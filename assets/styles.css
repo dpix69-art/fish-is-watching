@@ -138,8 +138,8 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #050405;
-  color: #ffffff;
+  /* background-color: #050405; */
+  color: #050405;
   padding: 8px 32px;
   border-radius: 9999px;
   font-size: 20px;
