@@ -247,20 +247,25 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #050405;
-  color: #ffffff;
+  /* background-color: #050405; */
+  color: #050405;
   padding: 8px 24px;
   border-radius: 9999px;
   font-size: 16px;
   font-style: italic;
   font-weight: 400;
   text-decoration: none;
-  border: none;
+  border: 1px #050405 solid;
   cursor: pointer;
   transition: opacity 0.2s ease;
   min-height: 44px;
   width: fit-content;
   margin-top: 16px
+}
+
+.event-button:hover {
+  background-color: #050405;
+  text-decoration: none;
 }
 
 .quote {
