@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fish is watching//site//EN
+BEGIN:VEVENT
+UID:werkstatthaus-stuttgart@fishiswatching.site
+DTSTAMP:20251109T120000Z
+DTSTART;TZID=Europe/Berlin:20260128T190000
+DTEND;TZID=Europe/Berlin:20260128T203000
+SUMMARY:Werkstatthaus Stuttgart
+LOCATION:Werkstatthaus, Stuttgart
+DESCRIPTION:Live session on resonance, movement, and listening. Inside Werkstatthaus, sound and movement are explored together. Each small change of position shifts what can be heard. The session invites quiet attention and shared presence.
+URL:https://fishiswatching.site/
+END:VEVENT
+END:VCALENDAR

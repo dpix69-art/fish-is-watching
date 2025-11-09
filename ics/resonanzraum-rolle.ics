@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fish is watching//site//EN
+BEGIN:VEVENT
+UID:resonanzraum-rolle@fishiswatching.site
+DTSTAMP:20251109T120000Z
+DTSTART;TZID=Europe/Berlin:20251116T190000
+DTEND;TZID=Europe/Berlin:20251116T203000
+SUMMARY:Resonanzraum Rolle
+LOCATION:Private house, Stuttgart
+DESCRIPTION:Live performance and recording at the house of Günter Rolle. The session takes place in the space where Günter Rolle once built and played his instruments. The house has its own tone and quiet history. We listen to how air, wood, and instruments react to each other.
+URL:https://fishiswatching.site/
+END:VEVENT
+END:VCALENDAR

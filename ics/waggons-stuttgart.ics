@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fish is watching//site//EN
+BEGIN:VEVENT
+UID:waggons-stuttgart@fishiswatching.site
+DTSTAMP:20251109T120000Z
+DTSTART;TZID=Europe/Berlin:20251209T190000
+DTEND;TZID=Europe/Berlin:20251209T203000
+SUMMARY:Waggons Stuttgart
+LOCATION:Waggons, Nordbahnhof, Stuttgart
+DESCRIPTION:Performance among the railway containers at Waggons Stuttgart. Between wagons and metal walls, sound moves in open air. The setup changes with wind, trains, and people around. The place becomes part of the music.
+URL:https://fishiswatching.site/
+END:VEVENT
+END:VCALENDAR

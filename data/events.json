@@ -1,0 +1,37 @@
+{
+  "events": [
+    {
+      "slug": "resonanzraum-rolle",
+      "title": "Resonanzraum Rolle",
+      "subtitle": "Live performance and recording at the house of Günter Rolle.",
+      "description": "The session takes place in the space where Günter Rolle once built and played his instruments. The house has its own tone and quiet history. We listen to how air, wood, and instruments react to each other.",
+      "city": "Stuttgart",
+      "date": "2025-11-16",
+      "venue": "Private house",
+      "icsFile": "ics/resonanzraum-rolle.ics",
+      "year": 2025
+    },
+    {
+      "slug": "waggons-stuttgart",
+      "title": "Waggons Stuttgart",
+      "subtitle": "Performance among the railway containers at Waggons Stuttgart.",
+      "description": "Between wagons and metal walls, sound moves in open air. The setup changes with wind, trains, and people around. The place becomes part of the music.",
+      "city": "Stuttgart",
+      "date": "2025-12-09",
+      "venue": "Waggons, Nordbahnhof",
+      "icsFile": "ics/waggons-stuttgart.ics",
+      "year": 2025
+    },
+    {
+      "slug": "werkstatthaus-stuttgart",
+      "title": "Werkstatthaus Stuttgart",
+      "subtitle": "Live session on resonance, movement, and listening.",
+      "description": "Inside Werkstatthaus, sound and movement are explored together. Each small change of position shifts what can be heard. The session invites quiet attention and shared presence.",
+      "city": "Stuttgart",
+      "date": "2026-01-28",
+      "venue": "Werkstatthaus",
+      "icsFile": "ics/werkstatthaus-stuttgart.ics",
+      "year": 2026
+    }
+  ]
+}
