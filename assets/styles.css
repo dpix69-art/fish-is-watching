@@ -144,7 +144,8 @@ main {
   transition: opacity 0.2s ease;
   min-height: 44px;
   width: fit-content;
-  margin-top: 16px
+  margin-top: 16px;
+  margin-left: -8px;
 }
 
 .button:hover {
