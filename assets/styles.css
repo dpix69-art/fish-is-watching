@@ -182,8 +182,10 @@ main {
 
 .b-container {
   display: flex;
-  flex-direction: space-between;
-  gap: 8px;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: left;
+  align-items: flex-end;
 }
 
 
