@@ -48,11 +48,32 @@ function renderEvents(events) {
     footer.className = 'event-footer';
 
     const button = document.createElement('a');
-    button.href = event.icsFile;
+    // button.href = event.icsFile;
+    // button.className = 'event-button';
+    // button.textContent = 'Remind me';
+    // button.download = `${event.slug}.ics`;
+    // button.setAttribute('aria-label', `Download calendar reminder for ${event.title}`);
+
+    // Формируем ссылку для Google Calendar
+    const start = event.date.replace(/-/g, '') + 'T180000Z';
+    const end = event.date.replace(/-/g, '') + 'T193000Z';
+    const gcalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${start}/${end}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.venue + ', ' + event.city)}&sf=true&output=xml`;
+
+    // Формируем fallback-ссылку для Apple/Outlook (webcal)
+    const webcalLink = `webcal://${window.location.host}/${event.icsFile}`;
+
+    // Создаём кнопку
     button.className = 'event-button';
     button.textContent = 'Remind me';
-    button.download = `${event.slug}.ics`;
-    button.setAttribute('aria-label', `Download calendar reminder for ${event.title}`);
+    button.setAttribute('aria-label', `Add ${event.title} to calendar`);
+    button.target = '_blank';
+    button.rel = 'noopener noreferrer';
+    button.href = gcalLink;
+
+    // Альтернатива — если пользователь на macOS/iOS, используем webcal
+    if (/Mac|iPhone|iPad/.test(navigator.platform)) {
+    button.href = webcalLink;
+  }
 
     const meta = document.createElement('p');
     meta.className = 'event-meta';
