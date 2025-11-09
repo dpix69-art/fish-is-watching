@@ -388,7 +388,7 @@ footer {
 
   .header-container {
     flex-direction: column;
-    gap: 24px;
+    /* gap: 24px; */
   }
 
   main {
