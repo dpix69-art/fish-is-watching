@@ -81,7 +81,7 @@ header {
 .site-tagline {
   font-size: 16px;
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.1;
   color: #050405;
   max-width: 290px;
 }
@@ -163,7 +163,7 @@ main {
 
 .manifest {
   font-size: 24px;
-  line-height: 1.6;
+  line-height: 1.5;
   width: 400px;
 }
 
