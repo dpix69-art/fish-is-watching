@@ -230,7 +230,7 @@ main {
 
 .event-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
 }
@@ -238,6 +238,26 @@ main {
 .event-meta {
   font-size: 16px;
   color: #666666;
+}
+
+.event-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #050405;
+  color: #ffffff;
+  padding: 8px 24px;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  min-height: 44px;
+  width: fit-content;
+  margin-top: 16px
 }
 
 .quote {
@@ -251,7 +271,7 @@ main {
 blockquote {
   max-width: 327px;
   text-align: left;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 1.6;
 }
 
