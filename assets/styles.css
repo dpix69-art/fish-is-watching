@@ -244,8 +244,8 @@ main {
 }
 
 blockquote {
-  max-width: 600px;
-  text-align: right;
+  max-width: 327px;
+  text-align: left;
   font-size: 16px;
   line-height: 1.6;
 }
