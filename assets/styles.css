@@ -371,6 +371,7 @@ footer {
 
   .quote {
     justify-content: flex-start;
+    margin-left: 0px;
   }
 
   blockquote {
@@ -409,6 +410,7 @@ footer {
 
   .quote {
     padding: 64px 0;
+    margin-left: 0px;
   }
 
   footer {
