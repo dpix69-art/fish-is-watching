@@ -426,6 +426,14 @@ footer {
   display: block;
 }
 
+.tech-rider-link {
+    display: block;
+    font-size: 16px;
+    color: #666666;
+    /* text-decoration: underline; */
+    padding-top: 24px;
+  }
+
   .event-footer {
     flex-direction: column;
     align-items: flex-start;
