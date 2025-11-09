@@ -201,8 +201,9 @@ main {
 .hero-right {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
   padding-top: 8px;
+  margin-left: 100px;
 }
 
 .manifest {
@@ -212,7 +213,7 @@ main {
 }
 
 .manifest p {
-  margin-bottom: 24px;
+  margin-bottom: 40px;
 }
 
 .manifest p:last-child {
