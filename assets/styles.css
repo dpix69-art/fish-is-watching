@@ -203,7 +203,7 @@ main {
   flex-direction: column;
   gap: 40px;
   padding-top: 8px;
-  margin-left: 100px;
+  /* margin-left: 100px; */
 }
 
 .manifest {
