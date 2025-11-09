@@ -408,6 +408,24 @@ footer {
     max-width: 300px;
   }
 
+  .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  min-height: 44px;
+  width: fit-content;
+  margin-top: 16px;
+  margin-left: -8px;
+  border: #050405 1px solid;
+}
+
+.b-container {
+  /* flex-direction: column;
+  gap: 16px; */
+  display: block;
+}
+
   .event-footer {
     flex-direction: column;
     align-items: flex-start;
@@ -446,6 +464,14 @@ footer {
 
   .hero-headline {
     font-size: 28px;
+  }
+
+  .tech-rider-link {
+    display: block;
+    font-size: 16px;
+    color: #666666;
+    /* text-decoration: underline; */
+    padding-top: 24px;
   }
 
   .schedule {
