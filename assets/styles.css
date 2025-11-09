@@ -230,8 +230,8 @@ main {
 
 .event-footer {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: start;
+  align-items: baseline;
   gap: 16px;
 }
 
