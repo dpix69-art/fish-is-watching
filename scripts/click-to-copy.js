@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(email);
-      btn.textContent = 'Copied';
+      btn.textContent = 'e-mail copied!';
       btn.classList.add('copied');
 
       setTimeout(() => {
