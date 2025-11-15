@@ -426,6 +426,10 @@ footer {
   display: block;
 }
 
+#copyBooking {
+  background-color: #ffffff;
+}
+
 .tech-rider-link {
     display: block;
     font-size: 16px;
