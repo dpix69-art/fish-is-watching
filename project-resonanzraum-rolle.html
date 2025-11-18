@@ -2,10 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Resonanzraum Rolle — fish is watching</title>
     <meta
       name="description"
@@ -26,48 +23,56 @@
   </head>
   <body>
     <header>
-  <div class="header-container">
-    <a href="index.html" class="header-left header-logo-link">
-      <h1 class="site-title">fish is watching</h1>
-      <p class="site-tagline">
-        Modular performance collective exploring listening as method and process as form.
-      </p>
-    </a>
+      <div class="header-container">
+        <a href="index.html" class="header-left header-logo-link">
+          <h1 class="site-title">fish is watching</h1>
+          <p class="site-tagline">
+            Modular performance collective exploring listening as method and
+            process as form.
+          </p>
+        </a>
 
-    <nav class="header-nav">
-      <a
-        href="https://fishiswatching.bandcamp.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >Bandcamp</a>
-      <a
-        href="https://youtube.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >YouTube</a>
-    </nav>
-  </div>
-</header>
+        <nav class="header-nav">
+          <a
+            href="https://fishiswatching.bandcamp.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Bandcamp
+          </a>
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            YouTube
+          </a>
+        </nav>
+      </div>
+    </header>
 
-    <main id="main-content">
+    <main id="main-content" data-project-slug="resonanzraum-rolle">
       <!-- Project header -->
       <section class="project-header">
-        <h1 class="project-title">Resonanzraum Rolle</h1>
-        <p class="project-meta">Stuttgart, 16.11.2025</p>
-        <p class="project-subtitle">
-          Live performance and recording at the house of Günter Rolle.
-        </p>
-        <p class="project-description">
-          The session takes place in the space where Günter Rolle once built and
-          played his instruments. The house has its own tone and quiet history.
-          We listen to how air, wood, and instruments react to each other.
-        </p>
+        <h1 class="project-title" data-project-field="title"></h1>
+        <p class="project-meta" data-project-field="meta"></p>
+        <p class="project-subtitle" data-project-field="subtitle"></p>
+        <p class="project-description" data-project-field="description"></p>
+
+        <!-- Remind me для этого проекта -->
+        <a
+          href="#"
+          class="event-button project-remind-button"
+          data-project-remind
+        >
+          Remind me
+        </a>
       </section>
 
       <!-- Video block -->
       <section class="project-media" aria-label="Project video">
         <div class="project-video">
-          <!-- Replace about:blank with your actual Vimeo/YouTube embed URL -->
+          <!-- Подставишь реальный embed позже -->
           <iframe
             src="about:blank"
             title="Resonanzraum Rolle video documentation"
@@ -81,7 +86,7 @@
       <section class="project-bandcamp" aria-label="Bandcamp player">
         <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2>
         <div class="project-bandcamp-embed">
-          <!-- Replace about:blank with your Bandcamp embed URL -->
+          <!-- Подставишь реальный Bandcamp embed позже -->
           <iframe
             src="about:blank"
             title="Resonanzraum Rolle Bandcamp player"
@@ -110,7 +115,7 @@
         fish is watching — Resonanzraum Rolle, 16.11.2025.
       </p>
 
-      <!-- Have an Idea? -->
+      <!-- Have an Idea? (как раньше) -->
       <section class="idea-section">
         <div class="idea-heading">
           <h2 class="idea-title">Have an Idea?</h2>
@@ -141,83 +146,52 @@
         </div>
       </section>
 
-      <!-- Similar Projects -->
+      <!-- Similar Projects — теперь автогенерация из JSON -->
       <section class="similar-projects">
         <h2 class="similar-heading">Similar Projects</h2>
-        <div class="similar-list">
-          <article class="similar-card">
-            <h3 class="similar-title">Resonanzraum Rolle</h3>
-            <p class="similar-meta">Stuttgart, 16.11.2025</p>
-            <p class="similar-description">
-              Live performance and recording at the house of Günter Rolle. The
-              house has its own tone and quiet history. We listen to how air,
-              wood, and instruments react to each other.
-            </p>
-            <div class="similar-actions">
-              <a
-                href="ics/resonanzraum-rolle.ics"
-                class="event-button"
-                download="resonanzraum-rolle.ics"
-                >Remind me</a
-              >
-              <a href="project-resonanzraum-rolle.html">open project</a>
-            </div>
-          </article>
-
-          <article class="similar-card">
-            <h3 class="similar-title">Werkstatthaus Stuttgart</h3>
-            <p class="similar-meta">Stuttgart, 28.01.2026</p>
-            <p class="similar-description">
-              Live session on resonance, movement, and listening. Inside
-              Werkstatthaus, sound and movement are explored together. Each
-              small change of position shifts what can be heard.
-            </p>
-            <div class="similar-actions">
-              <a href="project-werkstatthaus-stuttgart.html">open project</a>
-            </div>
-          </article>
-        </div>
+        <div
+          class="similar-list"
+          data-projects
+          data-projects-variant="detail"
+          data-projects-limit="2"
+        ></div>
       </section>
     </main>
 
     <footer>
-  <div class="footer-container">
-    <nav class="footer-nav">
-      <a
-        href="https://instagram.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open Instagram in a new tab"
-      >
-        Instagram
-      </a>
-      <a
-        href="https://fishiswatching.bandcamp.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open Bandcamp in a new tab"
-      >
-        Bandcamp
-      </a>
-      <a
-        href="https://youtube.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open YouTube in a new tab"
-      >
-        YouTube
-      </a>
-    </nav>
+      <div class="footer-container">
+        <nav class="footer-nav">
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram
+          </a>
+          <a
+            href="https://fishiswatching.bandcamp.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Bandcamp
+          </a>
+          <a
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            YouTube
+          </a>
+        </nav>
+        <p class="copyright">
+          fish is watching © 2025. All rights reserved.
+          <a href="impressum.html">Impressum</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </p>
+      </div>
+    </footer>
 
-    <p class="copyright">
-      fish is watching © 2025. All rights reserved.
-      <a href="impressum.html">Impressum</a>
-      <a href="privacy.html">Privacy Policy</a>
-    </p>
-  </div>
-</footer>
-
-
+    <script type="module" src="scripts/main.js" defer></script>
     <script type="module" src="scripts/click-to-copy.js" defer></script>
   </body>
 </html>
