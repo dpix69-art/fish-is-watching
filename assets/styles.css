@@ -366,6 +366,339 @@ footer {
   margin: 0 auto;
 }
 
+/* ============================
+   Project detail page
+   ============================ */
+
+.project-header {
+  padding: 80px 0 48px;
+  max-width: 720px;
+}
+
+.project-title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.project-meta {
+  font-size: 16px;
+  font-style: italic;
+  color: #666666;
+  margin-bottom: 24px;
+}
+
+.project-subtitle {
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.project-description {
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 570px;
+}
+
+.project-media {
+  padding: 0 0 64px;
+}
+
+.project-video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  background-color: #f2f2f2;
+}
+
+.project-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.project-bandcamp {
+  padding-bottom: 64px;
+}
+
+.project-bandcamp-title {
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.project-bandcamp-embed iframe {
+  width: 100%;
+  min-height: 200px;
+  border: 0;
+  background-color: #f2f2f2;
+}
+
+.project-gallery {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+.project-photo {
+  flex: 1;
+}
+
+.project-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background-color: #f2f2f2;
+}
+
+.project-caption {
+  font-size: 14px;
+  font-style: italic;
+  color: #666666;
+  text-align: center;
+  margin: 0 0 80px;
+}
+
+/* ============================
+   Have an Idea? section
+   ============================ */
+
+.idea-section {
+  padding: 80px 0 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  column-gap: 80px;
+  row-gap: 24px;
+  border-top: 1px solid #f2f2f2;
+}
+
+.idea-heading {
+  display: flex;
+  align-items: flex-start;
+}
+
+.idea-title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.idea-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.idea-subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.idea-email {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.idea-email .click-to-copy {
+  color: #666666;
+  margin-left: 4px;
+}
+
+.idea-email:hover .click-to-copy {
+  text-decoration: underline;
+}
+
+/* ============================
+   Similar Projects
+   ============================ */
+
+.similar-projects {
+  padding: 64px 0 96px;
+  border-top: 1px solid #f2f2f2;
+}
+
+.similar-heading {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.similar-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+
+.similar-card {
+  flex: 1 1 0;
+  min-width: 260px;
+  max-width: 440px;
+}
+
+.similar-title {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.similar-meta {
+  font-size: 16px;
+  font-style: italic;
+  color: #666666;
+  margin-bottom: 16px;
+}
+
+.similar-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.similar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ============================
+   Legal pages (Impressum / Privacy)
+   ============================ */
+
+.legal-page {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.legal-header {
+  margin-bottom: 48px;
+}
+
+.legal-title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.legal-title-secondary {
+  font-weight: 400;
+}
+
+.legal-intro {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.legal-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 64px;
+  row-gap: 48px;
+  margin-bottom: 80px;
+}
+
+.legal-column {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.legal-section + .legal-section {
+  margin-top: 32px;
+}
+
+.legal-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.legal-contact {
+  margin-top: 16px;
+}
+
+/* ============================
+   Footer tweak for legal links
+   ============================ */
+
+.copyright a {
+  margin-left: 8px;
+  font-style: italic;
+  font-size: 14px;
+}
+
+/* ============================
+   Responsive adjustments
+   ============================ */
+
+@media (max-width: 1024px) {
+  .project-header {
+    padding-top: 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-gallery {
+    flex-direction: column;
+  }
+
+  .idea-section {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+  }
+
+  .idea-columns {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .similar-list {
+    flex-direction: column;
+  }
+
+  .legal-columns {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+
+  .legal-page {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-header {
+    padding-top: 48px;
+  }
+
+  .project-caption {
+    margin-bottom: 64px;
+  }
+
+  .idea-section {
+    padding-top: 64px;
+    padding-bottom: 56px;
+  }
+
+  .similar-projects {
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
+}
+
+
 @media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
