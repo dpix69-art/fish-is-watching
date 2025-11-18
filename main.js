@@ -1,10 +1,11 @@
-// scripts/main.js
 
 async function loadEvents() {
   try {
     const response = await fetch('data/events.json');
     const data = await response.json();
-    renderEvents(data.events || []);
+
+    const events = Array.isArray(data.events) ? data.events : [];
+    renderEvents(events);
   } catch (error) {
     console.error('Failed to load events:', error);
   }
@@ -28,7 +29,7 @@ function renderEvents(events) {
 
   let currentYear = null;
 
-  events.forEach(event => {
+  events.forEach((event) => {
     const year = event.year || new Date(event.date).getFullYear();
 
     if (currentYear !== year) {
@@ -44,7 +45,7 @@ function renderEvents(events) {
     const card = document.createElement('article');
     card.className = 'event-card';
 
-    // ==== Кликабельный заголовок ====
+    // ===== Заголовок: делаем его ссылкой на страницу проекта =====
     const title = document.createElement('h3');
     title.className = 'event-title';
 
@@ -65,45 +66,44 @@ function renderEvents(events) {
     const footer = document.createElement('div');
     footer.className = 'event-footer';
 
-    // ==== Кнопка Remind me (текущая логика Google / webcal) ====
+    // ===== Кнопка Remind me (как было, через Google Calendar / webcal) =====
     if (event.date && event.venue && event.city) {
       const button = document.createElement('a');
 
       const start = event.date.replace(/-/g, '') + 'T180000Z';
       const end = event.date.replace(/-/g, '') + 'T193000Z';
-      const gcalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-        event.title
-      )}&dates=${start}/${end}&details=${encodeURIComponent(
-        event.description || ''
-      )}&location=${encodeURIComponent(
-        `${event.venue}, ${event.city}`
-      )}&sf=true&output=xml`;
 
-      // fallback webcal для macOS / iOS
-      let href = gcalLink;
-      if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
-        const origin =
-          window.location.origin || `${window.location.protocol}//${window.location.host}`;
-        href = `webcal://${window.location.host}/${event.icsFile}`;
-      }
+      const gcalLink =
+        `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+        `&text=${encodeURIComponent(event.title)}` +
+        `&dates=${start}/${end}` +
+        `&details=${encodeURIComponent(event.description || '')}` +
+        `&location=${encodeURIComponent(event.venue + ', ' + event.city)}` +
+        `&sf=true&output=xml`;
+
+      const webcalLink = `webcal://${window.location.host}/${event.icsFile}`;
 
       button.className = 'event-button';
       button.textContent = 'Remind me';
       button.setAttribute('aria-label', `Add ${event.title} to calendar`);
       button.target = '_blank';
       button.rel = 'noopener noreferrer';
-      button.href = href;
+      button.href = gcalLink;
+
+      if (/Mac|iPhone|iPad/.test(navigator.platform) && event.icsFile) {
+        button.href = webcalLink;
+      }
 
       footer.appendChild(button);
     }
 
-    // ==== Ссылка open project ====
+    // ===== Новая ссылка: open project =====
     const openLink = document.createElement('a');
     openLink.href = projectUrl;
     openLink.textContent = 'open project';
     footer.appendChild(openLink);
 
-    // ==== Мета: город + дата ====
+    // ===== Мета: город + дата =====
     const meta = document.createElement('p');
     meta.className = 'event-meta';
     meta.textContent = `${event.city}, ${formatDate(event.date)}`;
