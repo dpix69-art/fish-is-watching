@@ -98,10 +98,10 @@ function renderEvents(events) {
     }
 
     // ===== Новая ссылка: open project =====
-    const openLink = document.createElement('a');
-    openLink.href = projectUrl;
-    openLink.textContent = 'open project';
-    footer.appendChild(openLink);
+    // const openLink = document.createElement('a');
+    // openLink.href = projectUrl;
+    // openLink.textContent = 'open project';
+    // footer.appendChild(openLink);
 
     // ===== Мета: город + дата =====
     const meta = document.createElement('p');
