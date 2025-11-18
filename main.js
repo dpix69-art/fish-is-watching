@@ -1,3 +1,5 @@
+// scripts/main.js
+
 let cachedEvents = null;
 
 /* =============================
