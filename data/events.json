@@ -10,28 +10,6 @@
       "venue": "Private house",
       "icsFile": "ics/resonanzraum-rolle.ics",
       "year": 2025
-    },
-    {
-      "slug": "waggons-stuttgart",
-      "title": "Waggons Stuttgart",
-      "subtitle": "Performance among the railway containers at Waggons Stuttgart.",
-      "description": "Between wagons and metal walls, sound moves in open air. The setup changes with wind, trains, and people around. The place becomes part of the music.",
-      "city": "Stuttgart",
-      "date": "2025-12-09",
-      "venue": "Waggons, Nordbahnhof",
-      "icsFile": "ics/waggons-stuttgart.ics",
-      "year": 2025
-    },
-    {
-      "slug": "werkstatthaus-stuttgart",
-      "title": "Werkstatthaus Stuttgart",
-      "subtitle": "Live session on resonance, movement, and listening.",
-      "description": "Inside Werkstatthaus, sound and movement are explored together. Each small change of position shifts what can be heard. The session invites quiet attention and shared presence.",
-      "city": "Stuttgart",
-      "date": "2026-01-28",
-      "venue": "Werkstatthaus",
-      "icsFile": "ics/werkstatthaus-stuttgart.ics",
-      "year": 2026
     }
   ]
 }
