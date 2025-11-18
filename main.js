@@ -1,5 +1,8 @@
-
 let cachedEvents = null;
+
+/* =============================
+   Data loading
+   ============================= */
 
 async function loadEvents() {
   if (cachedEvents) return cachedEvents;
@@ -7,21 +10,25 @@ async function loadEvents() {
   const response = await fetch('data/events.json');
   const data = await response.json();
   const events = Array.isArray(data.events) ? data.events : [];
-  // сортируем по дате (ближайшие сверху)
-  cachedEvents = events.sort((a, b) => {
+
+  // сортируем по дате (старые сверху / можно поменять при желании)
+  cachedEvents = events.slice().sort((a, b) => {
     const da = new Date(a.date).getTime();
     const db = new Date(b.date).getTime();
     return da - db;
   });
+
   return cachedEvents;
 }
 
 function formatDate(dateString) {
   const date = new Date(dateString);
   if (Number.isNaN(date.getTime())) return dateString;
+
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
+
   return `${day}.${month}.${year}`;
 }
 
@@ -29,16 +36,20 @@ function projectUrlFromSlug(slug) {
   return `project-${slug}.html`;
 }
 
-/* =============== Schedule (index) =============== */
+/* =============================
+   Schedule on index.html
+   ============================= */
 
 function renderSchedule(container, events) {
   if (!container) return;
+
   container.innerHTML = '';
 
   events.forEach((event) => {
     const card = document.createElement('article');
     card.className = 'event-card';
 
+    // Заголовок события -> кликабельная ссылка
     const title = document.createElement('h3');
     title.className = 'event-title';
 
@@ -59,6 +70,7 @@ function renderSchedule(container, events) {
     const footer = document.createElement('div');
     footer.className = 'event-footer';
 
+    // Кнопка Remind me (ics download), если есть файл
     if (event.icsFile) {
       const button = document.createElement('a');
       button.className = 'event-button';
@@ -68,6 +80,13 @@ function renderSchedule(container, events) {
       footer.appendChild(button);
     }
 
+    // Ссылка open project
+    const openLink = document.createElement('a');
+    openLink.href = projectUrlFromSlug(event.slug);
+    openLink.textContent = 'open project';
+    footer.appendChild(openLink);
+
+    // Дата / место
     const meta = document.createElement('p');
     meta.className = 'event-meta';
     meta.textContent = `${event.city}, ${formatDate(event.date)}`;
@@ -82,7 +101,9 @@ function renderSchedule(container, events) {
   });
 }
 
-/* =============== Project detail header =============== */
+/* =============================
+   Project detail pages
+   ============================= */
 
 function initProjectDetail(events) {
   const main = document.querySelector('[data-project-slug]');
@@ -119,7 +140,9 @@ function initProjectDetail(events) {
   return event;
 }
 
-/* =============== Similar Projects =============== */
+/* =============================
+   Similar Projects (all pages)
+   ============================= */
 
 function createSimilarCard(event, variant) {
   const card = document.createElement('article');
@@ -189,7 +212,9 @@ function initSimilarProjects(events, currentProject) {
   });
 }
 
-/* =============== Bootstrapping =============== */
+/* =============================
+   Bootstrap
+   ============================= */
 
 document.addEventListener('DOMContentLoaded', async () => {
   let events = [];
@@ -200,15 +225,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // 1) Schedule на главной
+  // Schedule на главной
   const scheduleContainer = document.getElementById('events-container');
   if (scheduleContainer) {
     renderSchedule(scheduleContainer, events);
   }
 
-  // 2) Detalka проекта (если мы на project-*.html)
+  // Детальная страница проекта (если мы на project-*.html)
   const currentProject = initProjectDetail(events);
 
-  // 3) Similar Projects на любых страницах
+  // Similar Projects внизу всех страниц, где есть data-projects
   initSimilarProjects(events, currentProject);
 });
