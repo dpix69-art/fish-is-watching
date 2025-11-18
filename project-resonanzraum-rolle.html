@@ -2,26 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
     <title>Resonanzraum Rolle — fish is watching</title>
     <meta
       name="description"
-      content="Resonanzraum Rolle — live performance and recording at the house of Günter Rolle."
+      content="Live performance and recording at the house of Günter Rolle. The house has its own tone and quiet history. We listen to how air, wood, and instruments react to each other."
     />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="Resonanzraum Rolle — fish is watching"
-    />
-    <meta
-      property="og:description"
-      content="Live performance and recording at the house of Günter Rolle."
-    />
-    <meta property="og:image" content="assets/og-image.png" />
     <link rel="icon" href="assets/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
+    <!-- HEADER такой же, как на остальных страницах -->
     <header>
       <div class="header-container">
         <a href="index.html" class="header-left header-logo-link">
@@ -51,71 +45,87 @@
       </div>
     </header>
 
-    <main id="main-content" data-project-slug="resonanzraum-rolle">
-      <!-- Project header -->
+    <main id="main-content">
+      <!-- PROJECT HEADER -->
       <section class="project-header">
-        <h1 class="project-title" data-project-field="title"></h1>
-        <p class="project-meta" data-project-field="meta"></p>
-        <p class="project-subtitle" data-project-field="subtitle"></p>
-        <p class="project-description" data-project-field="description"></p>
+        <h1 class="project-title">Resonanzraum Rolle</h1>
+        <p class="project-meta">Stuttgart, 16.11.2025</p>
 
-        <!-- Remind me для этого проекта -->
+        <p class="project-subtitle">
+          Live performance and recording at the house of Günter Rolle.
+        </p>
+
+        <p class="project-description">
+          The session takes place in the space where Günter Rolle once built and
+          played his instruments. The house has its own tone and quiet history.
+          Light, walls, and furniture hold the memory of earlier rehearsals.
+        </p>
+
+        <p class="project-description">
+          We work with this memory as a resonant body. Microphones are placed
+          close to objects and corners, contact mics follow surfaces, and small
+          speakers move sound through the rooms. We listen to how air, wood, and
+          instruments react to each other and let the space decide when the
+          piece begins and ends.
+        </p>
+
+        <!-- Remind me через .ics (можно поменять путь, если нужно) -->
         <a
-          href="#"
           class="event-button project-remind-button"
-          data-project-remind
+          href="ics/resonanzraum-rolle.ics"
+          download="resonanzraum-rolle.ics"
         >
           Remind me
         </a>
       </section>
 
-      <!-- Video block -->
-      <!-- <section class="project-media" aria-label="Project video"> -->
-        <!-- <div class="project-video"> -->
-          <!-- Подставишь реальный embed позже -->
-          <!-- <iframe
+      <!-- VIDEO BLOCK -->
+      <section class="project-media" aria-label="Project video">
+        <div class="project-video">
+          <!-- сюда вставишь настоящий embed YouTube / Vimeo -->
+          <iframe
             src="about:blank"
-            title="Resonanzraum Rolle video documentation"
+            title="Resonanzraum Rolle — video documentation"
             loading="lazy"
             allowfullscreen
           ></iframe>
         </div>
-      </section> -->
+      </section>
 
-      <!-- Bandcamp block -->
-      <!-- <section class="project-bandcamp" aria-label="Bandcamp player"> -->
-        <!-- <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2> -->
-        <!-- <div class="project-bandcamp-embed"> -->
-          <!-- Подставишь реальный Bandcamp embed позже -->
-          <!-- <iframe
+      <!-- BANDCAMP BLOCK -->
+      <section class="project-bandcamp" aria-label="Bandcamp player">
+        <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2>
+        <div class="project-bandcamp-embed">
+          <!-- сюда вставишь настоящий Bandcamp embed -->
+          <iframe
             src="about:blank"
-            title="Resonanzraum Rolle Bandcamp player"
+            title="Resonanzraum Rolle — Bandcamp player"
             loading="lazy"
           ></iframe>
         </div>
-      </section> -->
+      </section>
 
-      <!-- Photo strip -->
+      <!-- PHOTO STRIP -->
       <section class="project-gallery" aria-label="Project photos">
         <figure class="project-photo">
           <img
-            src="assets/resonanzraum-photo-1.png"
-            alt="Performance setup at Resonanzraum Rolle"
+            src="assets/resonanzraum-rolle-photo-1.jpg"
+            alt="Room with instruments and speakers set up for Resonanzraum Rolle session"
           />
         </figure>
         <figure class="project-photo">
           <img
-            src="assets/resonanzraum-photo-2.png"
-            alt="Listeners and instruments during the session at Resonanzraum Rolle"
+            src="assets/resonanzraum-rolle-photo-2.jpg"
+            alt="Audience listening to the Resonanzraum Rolle performance"
           />
         </figure>
       </section>
 
       <p class="project-caption">
-        fish is watching — Resonanzraum Rolle, 16.11.2025.
+        fish is watching — Resonanzraum Rolle. 16.11.2025.
       </p>
 
-      <!-- Have an Idea? (как раньше) -->
+      <!-- HAVE AN IDEA? -->
       <section class="idea-section">
         <div class="idea-heading">
           <h2 class="idea-title">Have an Idea?</h2>
@@ -146,15 +156,43 @@
         </div>
       </section>
 
-      <!-- Similar Projects — теперь автогенерация из JSON -->
+      <!-- SIMILAR PROJECTS (пока статично, как на макете) -->
       <section class="similar-projects">
         <h2 class="similar-heading">Similar Projects</h2>
-        <div
-          class="similar-list"
-          data-projects
-          data-projects-variant="detail"
-          data-projects-limit="2"
-        ></div>
+        <div class="similar-list">
+          <article class="similar-card">
+            <h3 class="similar-title">Resonanzraum Rolle</h3>
+            <p class="similar-meta">Stuttgart, 16.11.2025</p>
+            <p class="similar-description">
+              Live performance and recording at the house of Günter Rolle. The
+              house has its own tone and quiet history. We listen to how air,
+              wood, and instruments react to each other.
+            </p>
+            <div class="similar-actions">
+              <a
+                href="ics/resonanzraum-rolle.ics"
+                class="event-button"
+                download="resonanzraum-rolle.ics"
+                >Remind me</a
+              >
+              <a href="project-resonanzraum-rolle.html">open project</a>
+            </div>
+          </article>
+
+          <article class="similar-card">
+            <h3 class="similar-title">Werkstatthaus Stuttgart</h3>
+            <p class="similar-meta">Stuttgart, 28.01.2026</p>
+            <p class="similar-description">
+              Live session on resonance, movement, and listening. Inside
+              Werkstatthaus, sound and movement are explored together. Each
+              small change of position shifts what can be heard. The session
+              invites quiet attention and shared presence.
+            </p>
+            <div class="similar-actions">
+              <a href="project-werkstatthaus-stuttgart.html">open project</a>
+            </div>
+          </article>
+        </div>
       </section>
     </main>
 
@@ -191,7 +229,6 @@
       </div>
     </footer>
 
-    <script type="module" src="scripts/main.js" defer></script>
     <script type="module" src="scripts/click-to-copy.js" defer></script>
   </body>
 </html>
