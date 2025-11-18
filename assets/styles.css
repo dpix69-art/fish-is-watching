@@ -840,3 +840,15 @@ footer {
     transition-duration: 0.01ms !important;
   }
 }
+/* Make the logo area clickable without changing layout */
+.header-logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.header-logo-link:hover .site-title,
+.header-logo-link:hover .site-tagline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
