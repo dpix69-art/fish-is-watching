@@ -1,10 +1,7 @@
-// scripts/main.js
-
 async function loadEvents() {
   try {
     const response = await fetch('data/events.json');
     const data = await response.json();
-
     const events = Array.isArray(data.events) ? data.events : [];
     renderEvents(events);
   } catch (error) {
@@ -24,14 +21,17 @@ function formatDate(dateString) {
 
 function renderEvents(events) {
   const container = document.getElementById('events-container');
-  if (!container) return;
+  if (!container || !Array.isArray(events)) return;
 
   container.innerHTML = '';
 
   let currentYear = null;
 
   events.forEach((event) => {
-    const year = event.year || new Date(event.date).getFullYear();
+    const year =
+      typeof event.year === 'number'
+        ? event.year
+        : new Date(event.date).getFullYear();
 
     if (currentYear !== year) {
       const yearDivider = document.createElement('div');
@@ -41,20 +41,12 @@ function renderEvents(events) {
       currentYear = year;
     }
 
-    const projectUrl = `project-${event.slug}.html`;
-
     const card = document.createElement('article');
     card.className = 'event-card';
 
-    // ===== Заголовок: делаем его ссылкой на страницу проекта =====
     const title = document.createElement('h3');
     title.className = 'event-title';
-
-    const titleLink = document.createElement('a');
-    titleLink.className = 'event-title-link';
-    titleLink.href = projectUrl;
-    titleLink.textContent = event.title;
-    title.appendChild(titleLink);
+    title.textContent = event.title;
 
     const subtitle = document.createElement('p');
     subtitle.className = 'event-subtitle';
@@ -62,13 +54,21 @@ function renderEvents(events) {
 
     const description = document.createElement('p');
     description.className = 'event-description';
-    description.textContent = event.description || '';
+    const descriptionText =
+      event.shortDescription || event.description || '';
+    description.textContent = descriptionText;
 
     const footer = document.createElement('div');
     footer.className = 'event-footer';
 
-    // ===== Кнопка Remind me (как было, через Google Calendar / webcal) =====
-    if (event.date && event.venue && event.city) {
+    // можно отключить кнопку Remind me через remindEnabled: false
+    const remindAllowed =
+      event.remindEnabled !== false &&
+      event.date &&
+      event.venue &&
+      event.city;
+
+    if (remindAllowed) {
       const button = document.createElement('a');
 
       const start = event.date.replace(/-/g, '') + 'T180000Z';
@@ -78,36 +78,31 @@ function renderEvents(events) {
         `https://calendar.google.com/calendar/render?action=TEMPLATE` +
         `&text=${encodeURIComponent(event.title)}` +
         `&dates=${start}/${end}` +
-        `&details=${encodeURIComponent(event.description || '')}` +
+        `&details=${encodeURIComponent(descriptionText)}` +
         `&location=${encodeURIComponent(event.venue + ', ' + event.city)}` +
         `&sf=true&output=xml`;
 
-      const webcalLink = `webcal://${window.location.host}/${event.icsFile}`;
+      let href = gcalLink;
+
+      // webcal-альтернатива для macOS / iOS, если есть icsFile
+      if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
+        href = `webcal://${window.location.host}/${event.icsFile}`;
+      }
 
       button.className = 'event-button';
       button.textContent = 'Remind me';
       button.setAttribute('aria-label', `Add ${event.title} to calendar`);
       button.target = '_blank';
       button.rel = 'noopener noreferrer';
-      button.href = gcalLink;
-
-      if (/Mac|iPhone|iPad/.test(navigator.platform) && event.icsFile) {
-        button.href = webcalLink;
-      }
+      button.href = href;
 
       footer.appendChild(button);
     }
 
-    // ===== Новая ссылка: open project =====
-    const openLink = document.createElement('a');
-    openLink.href = projectUrl;
-    openLink.textContent = 'open project';
-    footer.appendChild(openLink);
-
-    // ===== Мета: город + дата =====
     const meta = document.createElement('p');
     meta.className = 'event-meta';
     meta.textContent = `${event.city}, ${formatDate(event.date)}`;
+
     footer.appendChild(meta);
 
     card.appendChild(title);
