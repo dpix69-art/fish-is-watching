@@ -1,0 +1,551 @@
+You are a senior full-stack developer.
+
+Your task is to build a small GUI CMS web app to manage the events/projects content for an existing static website called “fish is watching”.
+
+The CMS will NOT be the public site itself. It is a separate tool that I will run locally or host on GitHub Pages to edit the JSON content of the public site.
+
+0. Environment & constraints
+
+No backend, no database
+
+The CMS must run entirely in the browser as a static web app.
+
+No server-side code, no database, no authentication.
+
+All persistence is done by:
+
+importing the existing data/events.json file from disk, and
+
+exporting/download a new events.json (and optional backup files) that I will commit manually to GitHub.
+
+Tech stack
+
+You MAY use a simple front-end stack:
+
+Option A (preferred): pure HTML + CSS + vanilla JS, bundled as static files.
+
+Option B: React/Vite or similar is allowed only if:
+
+you include a clear README.md with npm install and npm run build instructions,
+
+the final dist/ output is a static bundle that can be deployed to GitHub Pages.
+
+No server, no Node backend, no external API dependencies for saving data.
+
+File structure
+
+The CMS itself can live in a separate folder (for example, /cms/), but it must work as a standalone mini-app:
+
+cms/index.html
+
+cms/styles.css
+
+cms/main.js (or src/main.tsx etc. if you use a framework)
+
+Any bundler config / package.json if needed.
+
+A README.md explaining how to run/build.
+
+1. Context: existing public site & data schema
+
+The public “fish is watching” site is a static site (hosted on GitHub Pages) that loads event data from:
+
+data/events.json (relative to the site root).
+
+The site JavaScript expects the file exactly at this path:
+
+data/events.json
+
+
+and calls:
+
+fetch('data/events.json')
+
+
+You must not change this. The runtime public site will always expect data/events.json in that location.
+
+1.1 Current JSON schema (events.json)
+
+The JSON has the following structure:
+
+{
+  "events": [
+    {
+      "slug": "resonanzraum-rolle",
+      "title": "Resonanzraum Rolle",
+      "subtitle": "Live performance and recording at the house of Günter Rolle.",
+      "shortDescription": "Short description used on index cards.",
+      "body": [
+        "Paragraph 1 of the project description…",
+        "Paragraph 2…"
+      ],
+      "city": "Stuttgart",
+      "date": "2025-11-16",
+      "venue": "Private house",
+      "year": 2025,
+      "status": "upcoming",          // or "past"
+      "remindEnabled": true,         // boolean
+      "icsFile": "ics/resonanzraum-rolle.ics",
+      "video": {
+        "type": "vimeo",             // or "youtube"
+        "embedUrl": "https://player.vimeo.com/..."
+      },
+      "audio": {
+        "type": "bandcamp",          // or "soundcloud"
+        "embedUrl": "https://bandcamp.com/EmbeddedPlayer..."
+      },
+      "photos": [
+        {
+          "src": "assets/resonanzraum-photo-1.png",
+          "alt": "Short alt text…"
+        }
+      ],
+      "caption": "fish is watching — Resonanzraum Rolle. 16.11.2025."
+    }
+  ]
+}
+
+
+Important:
+
+The public site already works with this schema and must continue to work.
+
+The CMS must preserve this schema exactly (field names, types).
+
+Arrays body and photos must preserve order.
+
+date is ISO format: "YYYY-MM-DD".
+
+2. Goal of the CMS
+
+Build a GUI CMS that allows me to:
+
+Import the current events.json file (from my local disk).
+
+View all events in a list (sortable and searchable by title/slug/date).
+
+Create, edit, duplicate, and delete events.
+
+Edit all relevant fields of each event:
+
+slug (unique, URL-safe string, like resonanzraum-rolle)
+
+title
+
+subtitle
+
+shortDescription
+
+body (as an ordered list of paragraphs)
+
+city
+
+date
+
+venue
+
+year
+
+status ("upcoming" or "past", via dropdown)
+
+remindEnabled (boolean, via checkbox)
+
+icsFile (string; see ICS generation below)
+
+video.type ("vimeo" / "youtube" or empty)
+
+video.embedUrl
+
+audio.type ("bandcamp" / "soundcloud" or empty)
+
+audio.embedUrl
+
+photos (array of { src, alt } with add/remove/reorder)
+
+caption
+
+Optionally generate .ics files for events and set icsFile correctly.
+
+Export/download the updated JSON file as:
+
+events.json (for the public site), and
+
+an additional versioned backup, e.g. events-YYYY-MM-DD.json.
+
+The CMS does not upload images. For photos, it simply lets me define file paths (src) under the existing assets/ folder.
+
+3. UX requirements
+3.1 Main layout
+
+Create a simple, clean UI:
+
+Left column or top section:
+
+List of all events (table or list):
+
+columns: title, slug, date, status, city.
+
+click on a row to edit that event.
+
+buttons:
+
+“New event”
+
+“Duplicate” (clone selected event)
+
+“Delete” (with confirmation dialog).
+
+Right column or detail area:
+
+Full edit form for the selected event.
+
+Add a top toolbar with:
+
+Button “Import events.json”:
+
+Uses <input type="file"> to load events.json from the user’s computer.
+
+Parses JSON and fills the events list.
+
+Button “Export events.json”:
+
+Generates and downloads:
+
+events.json, and
+
+events-YYYY-MM-DD.json (backup, same content).
+
+A small text label showing how many events are loaded and if the JSON is valid.
+
+3.2 Event form details
+
+For each field:
+
+slug
+
+Text input.
+
+Must be non-empty, URL-safe, lowercase, no spaces:
+
+Only a-z, 0-9, -.
+
+Must be unique among all events.
+
+The CMS should validate and show errors if:
+
+slug is empty,
+
+slug contains invalid characters,
+
+slug is already used by another event.
+
+title, subtitle, shortDescription, city, venue, caption
+
+Simple text inputs or textareas.
+
+Do not auto-trim internal spaces or reformat.
+
+date
+
+Input type date if possible.
+
+Internally stored in JSON as string "YYYY-MM-DD".
+
+Validate that it is present and valid.
+
+year
+
+Numeric input (number), typically new Date(date).getFullYear().
+
+You may auto-fill/update it when the date changes, but it must be editable.
+
+status
+
+Dropdown with two options: "upcoming" and "past".
+
+When status = "past", you may set remindEnabled = false automatically (but still allow manual override in UI).
+
+remindEnabled
+
+Checkbox.
+
+Controls whether the front site will show the “Remind me” button.
+
+body (array of paragraphs)
+
+UI: allow adding/removing/reordering paragraph blocks.
+
+Each paragraph: a textarea.
+
+The JSON must store them as ["paragraph 1", "paragraph 2", ...] in order.
+
+video
+
+Two inputs:
+
+video.type (dropdown: empty/none, "vimeo", "youtube").
+
+video.embedUrl (text).
+
+If embedUrl is empty, video can be null or an object with empty strings — but keep the shape consistent (simpler to always keep an object).
+
+audio
+
+Same as video, but with:
+
+audio.type (dropdown: empty/none, "bandcamp", "soundcloud").
+
+audio.embedUrl.
+
+photos
+
+Section with a list of photo items:
+
+For each photo:
+
+src input (string; e.g. assets/resonanzraum-photo-1.png).
+
+alt input (string).
+
+Buttons:
+
+“Move up”
+
+“Move down”
+
+“Delete photo”
+
+Button “Add photo” to append a new { src: "", alt: "" }.
+
+4. ICS (“Remind me”) generation
+
+The public site’s JS uses icsFile to build a webcal:// link on macOS/iOS, but the contents of the ICS file must still be valid.
+
+The CMS should:
+
+For each event, have a checkbox “Generate .ics file”.
+
+When checked and the event has a valid date, title, city, and venue, show:
+
+a preview of the .ics content in a textarea, and
+
+a button “Download .ics” which triggers download of a file named:
+
+<slug>.ics
+
+
+When generating the .ics file, also set the JSON field:
+
+"icsFile": "ics/<slug>.ics"
+
+4.1 ICS format
+
+For ICS generation, use a simple template like:
+
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fish is watching//EN
+BEGIN:VEVENT
+UID:<slug>@fish-is-watching
+DTSTAMP:<YYYYMMDD>T000000Z
+DTSTART:<YYYYMMDD>T170000Z
+DTEND:<YYYYMMDD>T190000Z
+SUMMARY:<title>
+DESCRIPTION:<shortDescription or first body paragraph>
+LOCATION:<venue>, <city>
+END:VEVENT
+END:VCALENDAR
+
+
+Rules:
+
+YYYYMMDD comes from the event date (without dashes).
+
+Time can be fixed (e.g. 17:00–19:00 UTC) — that is fine.
+
+SUMMARY = title.
+
+DESCRIPTION = shortDescription if present, otherwise first body paragraph or empty.
+
+LOCATION = <venue>, <city>.
+
+The CMS does not move .ics files into the repo; it only lets me download them. I will manually place them into /ics/ and commit.
+
+5. Import & export logic
+5.1 Import
+
+Button “Import events.json” opens a file dialog.
+
+The user selects an existing events.json.
+
+The app:
+
+reads the file (FileReader),
+
+parses JSON,
+
+validates that it has a top-level events array,
+
+optionally validates each event according to the schema,
+
+if valid, replaces the current in-memory events with what was loaded.
+
+If validation fails, show a clear error message and do not overwrite the current in-memory data.
+
+5.2 Export
+
+Button “Export events.json”:
+
+Validates all events (basic checks: required fields, unique slugs, valid dates).
+
+If there are validation errors, display them clearly and do not export until they are fixed.
+
+If valid:
+
+Download a file named exactly events.json containing:
+
+{
+  "events": [ ... ]
+}
+
+
+Also download a second file as a backup with a date suffix:
+
+events-YYYY-MM-DD.json
+
+
+where YYYY-MM-DD is the current local date at export time.
+
+The public site will use events.json. The versioned backup files are only for my manual history and do not need to be referenced by the front-end JS.
+
+Do not change the fetch URL used by the site (data/events.json). The query suffix like ?v= may be used in HTML if I want to do cache-busting, but the file name on disk must stay events.json.
+
+6. Data validation rules
+
+Implement client-side validation before exporting:
+
+General
+
+events must be an array.
+
+At least 0 events is fine, but show a warning if there are none.
+
+Per event
+
+Required:
+
+slug (non-empty, unique, URL-safe),
+
+title (non-empty),
+
+city (non-empty),
+
+date (valid ISO date string),
+
+year (integer; normally matches the year of date),
+
+status must be "upcoming" or "past".
+
+Optional but recommended:
+
+subtitle,
+
+shortDescription,
+
+body array (0..N strings),
+
+venue,
+
+caption,
+
+video, audio, photos.
+
+Slug uniqueness
+
+No two events may share the same slug.
+
+On change of slug, validate uniqueness immediately.
+
+Types
+
+remindEnabled must be boolean.
+
+photos must be an array of objects with src (string) and alt (string).
+
+Show validation errors in a side panel or inline near the fields.
+
+7. Implementation details & deliverables
+7.1 Deliverables
+
+Produce a complete, working project with:
+
+All source files (HTML/CSS/JS and optional framework scaffolding).
+
+README.md with:
+
+How to run locally (e.g. npm install && npm run dev or just open cms/index.html).
+
+How to build for production (if using a bundler).
+
+How to use the CMS step by step:
+
+Open the CMS.
+
+Import current data/events.json.
+
+Edit / add / delete events.
+
+Export events.json (and backup).
+
+Download .ics for events that need “Remind me”.
+
+Copy events.json into the public site’s /data/ folder and .ics files into /ics/.
+
+Commit and push to GitHub.
+
+7.2 Code quality
+
+Clear, readable code with comments explaining key parts:
+
+Import logic,
+
+Validation,
+
+ICS generation,
+
+Export logic.
+
+No hard-coded absolute paths; use relative URLs suitable for GitHub Pages.
+
+All UI text can be simple English.
+
+8. Testing
+
+Before you finish, ensure that:
+
+The CMS opens in a browser with no errors.
+
+I can:
+
+Import an existing events.json with the described schema.
+
+See all events in a list.
+
+Edit an event (title, date, photos, etc.) and see changes reflected.
+
+Add a new event and export valid JSON.
+
+Delete an event.
+
+Generate and download a .ics file, and see icsFile updated to "ics/<slug>.ics".
+
+The exported events.json keeps the same overall shape:
+
+{
+  "events": [ ... ]
+}
+
+
+And when I replace the existing data/events.json on my public site with this file, the site continues to work with no changes to its JS.
+
+Build the CMS so that it is robust, easy to use, and strictly respects the existing events.json schema and constraints described above.
