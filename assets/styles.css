@@ -573,7 +573,7 @@ footer {
 .similar-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: baseline;
   gap: 16px;
 }
 
