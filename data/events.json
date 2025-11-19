@@ -50,7 +50,7 @@
       "venue": "Werkstatthaus",
       "year": 2026,
       "status": "upcoming",
-      "remindEnabled": true,
+      "remindEnabled": false,
       "icsFile": "ics/werkstatthaus-stuttgart.ics",
       "video": {
         "type": "vimeo",
