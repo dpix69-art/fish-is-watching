@@ -864,7 +864,7 @@ footer {
 }
 
 .event-title-link:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 /* Improve hover state for event buttons (contrast) */
 .event-button:hover {
