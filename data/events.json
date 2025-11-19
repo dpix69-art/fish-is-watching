@@ -23,7 +23,7 @@
         "type": "bandcamp",
         "embedUrl": "about:blank"
       },
-      "photos": [
+      "img": [
         {
           "src": "assets/resonanzraum-photo-1.png",
           "alt": "Room with instruments and speakers set up for Resonanzraum Rolle session"
