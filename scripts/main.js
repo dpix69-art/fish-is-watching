@@ -29,7 +29,7 @@ function renderEvents(events) {
 
   // Фильтруем только будущие события
   const upcoming = events.filter((event) => {
-    if (event.status === 'past') return false;
+    if (event.status === 'past') return true;
     if (event.status === 'upcoming') return true;
 
     if (!event.date) return true;
