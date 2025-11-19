@@ -375,6 +375,10 @@ footer {
   max-width: 720px;
 }
 
+.project-body {
+  max-width: 650px;
+}
+
 .project-title {
   font-size: 24px;
   font-weight: 400;
@@ -861,4 +865,10 @@ footer {
 
 .event-title-link:hover {
   text-decoration: underline;
+}
+/* Improve hover state for event buttons (contrast) */
+.event-button:hover {
+  background-color: #050405;
+  color: #ffffff;
+  text-decoration: none;
 }
