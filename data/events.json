@@ -13,6 +13,7 @@
       "date": "2025-11-16",
       "venue": "Private house",
       "year": 2025,
+      "status": "past",
       "remindEnabled": true,
       "icsFile": "ics/resonanzraum-rolle.ics",
       "video": {
@@ -42,12 +43,13 @@
       "shortDescription": "Live session on resonance, movement, and listening. Inside Werkstatthaus, sound and movement are explored together. Each small change of position shifts what can be heard. The session invites quiet attention and shared presence.",
       "body": [
         "The session takes place inside Werkstatthaus, a shared space for making, rehearsal, and experiments. Tables, tools, and walls are not hidden but become part of the staging. We treat the room as a moving instrument: sound travels between corners, between bodies, and between the different working areas of the house.",
-        "Movement and sound are developed together. Performers shift their position in relation to speakers, microphones, and the audience. Small changes in distance open or close parts of the room, revealing new resonances and cancelling others. The piece invites quiet attention: instead of following a fixed dramaturgy, we stay with the slow changes of the space itself."
+        "Participants are invited to walk, sit, and listen from different points in the room. Rather than focusing on a single stage, attention moves with them: each listener shapes what they hear by changing their position in relation to speakers, microphones, and the audience. Small changes in distance open or close parts of the room, revealing new resonances and cancelling others. The piece invites quiet attention: instead of following a fixed dramaturgy, we stay with the slow changes of the space itself."
       ],
       "city": "Stuttgart",
       "date": "2026-01-28",
       "venue": "Werkstatthaus",
       "year": 2026,
+      "status": "upcoming",
       "remindEnabled": true,
       "icsFile": "ics/werkstatthaus-stuttgart.ics",
       "video": {

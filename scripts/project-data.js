@@ -19,7 +19,7 @@ async function loadProjectData() {
   const events = Array.isArray(data.events) ? data.events : [];
   const event = events.find((e) => e.slug === slug);
   if (!event) {
-    console.warn('No event found for slug:', slug);
+    console.warn(`Event with slug "${slug}" not found in events.json`);
     return;
   }
 
@@ -94,6 +94,113 @@ async function loadProjectData() {
       photosContainer.appendChild(figure);
     });
   }
+
+  // === Similar Projects ===
+  renderSimilarProjects(slug, events, formatDate);
+}
+
+function renderSimilarProjects(currentSlug, events, formatDate) {
+  const container = document.querySelector('[data-projects]');
+  if (!container) return;
+
+  const limitAttr = container.getAttribute('data-projects-limit');
+  const limit = Number.isFinite(parseInt(limitAttr, 10))
+    ? parseInt(limitAttr, 10)
+    : 2;
+
+  const candidates = events.filter((e) => e.slug !== currentSlug);
+
+  if (candidates.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  // Перемешивание (Fisher–Yates)
+  const shuffled = candidates.slice();
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = tmp;
+  }
+
+  const selected = shuffled.slice(0, limit);
+  container.innerHTML = '';
+
+  selected.forEach((event) => {
+    const card = document.createElement('article');
+    card.className = 'similar-card';
+
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'similar-title';
+    titleEl.textContent = event.title || '';
+
+    const metaEl = document.createElement('p');
+    metaEl.className = 'similar-meta';
+    const metaParts = [];
+    if (event.city) metaParts.push(event.city);
+    if (event.date) metaParts.push(formatDate(event.date));
+    metaEl.textContent = metaParts.join(', ');
+
+    const descEl = document.createElement('p');
+    descEl.className = 'similar-description';
+    descEl.textContent =
+      event.shortDescription ||
+      event.subtitle ||
+      '';
+
+    const actions = document.createElement('div');
+    actions.className = 'similar-actions';
+
+    // Remind me здесь опционален; можно включить по твоему желанию
+    const isPast = event.status === 'past';
+    const remindAllowed =
+      !isPast &&
+      event.remindEnabled !== false &&
+      event.date &&
+      event.venue &&
+      event.city;
+
+    if (remindAllowed) {
+      const button = document.createElement('a');
+      const start = event.date.replace(/-/g, '') + 'T180000Z';
+      const end = event.date.replace(/-/g, '') + 'T193000Z';
+
+      const gcalLink =
+        `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+        `&text=${encodeURIComponent(event.title)}` +
+        `&dates=${start}/${end}` +
+        `&details=${encodeURIComponent(event.shortDescription || '')}` +
+        `&location=${encodeURIComponent(event.venue + ', ' + event.city)}` +
+        `&sf=true&output=xml`;
+
+      let href = gcalLink;
+      if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
+        href = `webcal://${window.location.host}/${event.icsFile}`;
+      }
+
+      button.className = 'similar-button';
+      button.textContent = 'Remind me';
+      button.target = '_blank';
+      button.rel = 'noopener noreferrer';
+      button.href = href;
+
+      actions.appendChild(button);
+    }
+
+    const projectLink = document.createElement('a');
+    projectLink.className = 'similar-open-link';
+    projectLink.href = `project-${event.slug}.html`;
+    projectLink.textContent = 'open project';
+    actions.appendChild(projectLink);
+
+    card.appendChild(titleEl);
+    card.appendChild(metaEl);
+    card.appendChild(descEl);
+    card.appendChild(actions);
+
+    container.appendChild(card);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', loadProjectData);

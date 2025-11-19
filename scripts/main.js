@@ -16,6 +16,7 @@ function formatDate(dateString) {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
+
   return `${day}.${month}.${year}`;
 }
 
@@ -23,8 +24,28 @@ function renderEvents(events) {
   const container = document.getElementById('events-container');
   if (!container || !Array.isArray(events)) return;
 
-  // Можно отсортировать по дате
-  const sorted = events.slice().sort((a, b) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Фильтруем только будущие события
+  const upcoming = events.filter((event) => {
+    if (event.status === 'past') return false;
+    if (event.status === 'upcoming') return true;
+
+    if (!event.date) return true;
+    const d = new Date(event.date);
+    if (Number.isNaN(d.getTime())) return true;
+    d.setHours(0, 0, 0, 0);
+    return d >= today;
+  });
+
+  if (upcoming.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  // Сортировка по дате
+  const sorted = upcoming.slice().sort((a, b) => {
     const da = new Date(a.date).getTime();
     const db = new Date(b.date).getTime();
     return da - db;
@@ -57,7 +78,7 @@ function renderEvents(events) {
     const title = document.createElement('h3');
     title.className = 'event-title';
 
-    const titleLink = document.createElement('div');//a
+    const titleLink = document.createElement('a');
     titleLink.className = 'event-title-link';
     titleLink.href = projectUrl;
     titleLink.textContent = event.title;
@@ -76,8 +97,10 @@ function renderEvents(events) {
     const footer = document.createElement('div');
     footer.className = 'event-footer';
 
-    // Remind me (можно отключить через remindEnabled: false)
+    // Remind me — только если не past и разрешено
+    const isPast = event.status === 'past';
     const remindAllowed =
+      !isPast &&
       event.remindEnabled !== false &&
       event.date &&
       event.venue &&
@@ -89,17 +112,19 @@ function renderEvents(events) {
       const start = event.date.replace(/-/g, '') + 'T180000Z';
       const end = event.date.replace(/-/g, '') + 'T193000Z';
 
+      const descriptionTextForCalendar = descriptionText;
+
       const gcalLink =
         `https://calendar.google.com/calendar/render?action=TEMPLATE` +
         `&text=${encodeURIComponent(event.title)}` +
         `&dates=${start}/${end}` +
-        `&details=${encodeURIComponent(descriptionText)}` +
+        `&details=${encodeURIComponent(descriptionTextForCalendar)}` +
         `&location=${encodeURIComponent(event.venue + ', ' + event.city)}` +
         `&sf=true&output=xml`;
 
       let href = gcalLink;
 
-      // webcal для macOS / iOS, если есть icsFile
+      // webcal для macOS / iOS, если есть .ics
       if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
         href = `webcal://${window.location.host}/${event.icsFile}`;
       }
@@ -114,8 +139,9 @@ function renderEvents(events) {
       footer.appendChild(button);
     }
 
-    // Ссылка open project
+    // Ссылка "open project"
     const openLink = document.createElement('a');
+    openLink.className = 'event-open-link';
     openLink.href = projectUrl;
     openLink.textContent = 'open project';
     footer.appendChild(openLink);

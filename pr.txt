@@ -1,0 +1,701 @@
+You are a senior front-end developer.
+
+You will be given a ZIP archive (or a full folder) of an existing website called **“fish is watching”**.  
+This site is already live on GitHub Pages and **works correctly right now**.  
+
+Your job is to **refactor it to be fully content-driven via JSON files**, while:
+
+- preserving the existing layout, design, and text content,
+- unifying project pages under a single data model,
+- and keeping the site deployable as a static site on GitHub Pages.
+
+I will copy-paste your output files directly into my repo, so you must output **complete file contents**, not diffs.
+
+---
+
+## 0. Constraints & important rules
+
+1. **Source of truth = current archive**
+
+   - Use the provided archive as the **only source of truth** for:
+     - All real texts (copy) in English/German (Impressum, Privacy, project descriptions, etc.).
+     - Current HTML layout and class names.
+     - Current CSS (`assets/styles.css`) and visual language.
+     - Current JS (`scripts/*.js`) and file structure.
+   - Do **not invent new wording**. All visible text must stay exactly the same as in the current site (unless we explicitly say to remove a block like Similar Projects on legal pages).
+
+2. **Tech stack**
+
+   - No frameworks: **pure HTML, CSS, vanilla JS**.
+   - No build tools, no bundlers, no npm. This is a static site for GitHub Pages.
+   - File paths must remain simple and relative:
+     - CSS: `assets/styles.css`
+     - JS: `scripts/main.js`, `scripts/project-data.js`, `scripts/legal-data.js`, `scripts/click-to-copy.js` (or similar, see below).
+     - JSON data: `data/*.json`
+     - Images: `assets/...`
+     - ICS files: `ics/...`
+
+3. **Deployment**
+
+   - The project is deployed on **GitHub Pages** (static hosting).
+   - All JSON is fetched via `fetch()` from the same origin (no external APIs).
+   - No server-side code. Everything must work as static files.
+
+4. **Do not break the current look & feel**
+
+   - The **visual layout and typography must remain effectively the same** as the current site in the archive:
+     - Same header & footer (site title, tagline, nav).
+     - Same colors, typography, spacing logic.
+     - Same responsive behavior (breakpoints and layout collapse).
+   - You may refactor/clean CSS, but it must not change the visual appearance in a noticeable way.
+
+---
+
+## 1. High-level goal
+
+Move **all content** (texts, dates, media URLs, etc.) out of HTML and into JSON files, so that:
+
+- The HTML pages become **templates** driven by JSON + JS.
+- The editor workflow becomes:
+  1. open a small CMS or simple JSON editor (out of scope for this task),
+  2. edit `data/*.json`,
+  3. commit+push to GitHub → site updates.
+
+We will use **multiple JSON files**, at least:
+
+- `data/events.json` — all project/event data.
+- `data/impressum.json` — Impressum content (EN & DE).
+- `data/privacy.json` — Privacy Policy content (EN & DE).
+- `data/cookies.json` — cookies-related texts (for the cookies section / cookie statement).
+
+You may add additional JSON files if it logically helps (e.g., `site.json` for global labels), but keep it simple.
+
+---
+
+## 2. Pages & current structure
+
+From the archive you will find at least these pages (names may vary slightly, but you can infer from the current structure):
+
+- `index.html` — home page with:
+  - hero / manifesto,
+  - schedule of projects/events,
+  - “Have an Idea?” section,
+  - (currently) “Similar Projects” or project list (depending on current implementation).
+
+- Project pages:
+  - `project-resonanzraum-rolle.html`
+  - `project-werkstatthaus-stuttgart.html`
+  - possibly more in the future with the pattern `project-<slug>.html`.
+
+- Legal pages:
+  - `impressum.html`
+  - `privacy.html`
+
+- Shared layout:
+  - Same `<header>` and `<footer>` on all pages.
+  - Shared “Have an Idea?” section near the bottom.
+  - Currently **Similar Projects** also appears on legal pages — this will change (see below).
+
+You must **use the current files as base**, not redesign them from scratch, and then produce updated versions.
+
+---
+
+## 3. Header & footer (keep as is)
+
+The header and footer in the archive are already correct and consistent. Your tasks:
+
+- Keep the **same HTML structure** for header/footer across all pages.
+- Ensure the **logo/title area is clickable** and links back to `index.html`.
+- Preserve all external links (Bandcamp, YouTube, Instagram, etc.).
+- Do not change the wording of the tagline or link labels.
+
+If necessary, you can centralize header/footer into components conceptually, but in practice you will still output full HTML for each page, as this is a static site.
+
+---
+
+## 4. JSON: events.json (projects / events)
+
+Create/reshape `data/events.json` so that **all project/event content** lives there.
+
+### 4.1. Data model
+
+Propose and implement a clean, future-proof structure, for example:
+
+```json
+{
+  "events": [
+    {
+      "slug": "resonanzraum-rolle",
+      "title": "Resonanzraum Rolle",
+      "status": "past",              // "past" or "upcoming"
+      "subtitle": "Short subtitle line as used now.",
+      "shortDescription": "Short description used on index cards.",
+      "body": [
+        "Paragraph 1 of the project description…",
+        "Paragraph 2…"
+      ],
+      "city": "Stuttgart",
+      "date": "2025-11-16",
+      "venue": "Private house",
+      "year": 2025,
+
+      "remindEnabled": true,         // used on schedule + project page if upcoming
+      "icsFile": "ics/resonanzraum-rolle.ics",
+
+      "videos": [
+        {
+          "provider": "vimeo",       // or "youtube"
+          "embedUrl": "https://player.vimeo.com/…"
+        }
+        // 0, 1, or many
+      ],
+
+      "audios": [
+        {
+          "provider": "bandcamp",    // or "soundcloud"
+          "embedUrl": "https://bandcamp.com/EmbeddedPlayer…"
+        }
+        // 0, 1, or many
+      ],
+
+      "photos": [
+        {
+          "src": "assets/resonanzraum-photo-1.png",
+          "alt": "Short alt text…"
+        }
+        // 0..N photos
+      ],
+
+      "caption": "fish is watching — Resonanzraum Rolle. 16.11.2025."
+    }
+
+    // other events, e.g. werkstatthaus-stuttgart, etc.
+  ]
+}
+Important:
+
+One unified structure for all events:
+
+If project already happened (past):
+
+status: "past"
+
+We disable “Remind me” buttons on the project page.
+
+If project is upcoming (in schedule):
+
+status: "upcoming"
+
+remindEnabled: true and a valid icsFile.
+
+Typically no photos / videos / audio yet, but that is allowed.
+
+Photos:
+
+There may be 0, 1 or many photos per project.
+
+Videos / audios:
+
+There may be 0, 1 or many embeds (Vimeo, YouTube, Bandcamp, SoundCloud).
+
+In the initial implementation you can render only the first video and first audio if that simplifies the layout, but the data structure should support multiple.
+
+You must migrate all existing event/project content from the archive into this new events.json, preserving all text and media URLs.
+
+5. Home page: index.html driven by events.json
+Update index.html so that:
+
+The hero section remains visually and textually identical to the current site.
+
+The schedule is rendered from data/events.json via JS (scripts/main.js).
+
+5.1. Schedule rendering (main.js)
+Refactor / rewrite scripts/main.js to:
+
+Fetch data/events.json.
+
+Filter events by status:
+
+On home page schedule, show only upcoming events (status === "upcoming").
+
+Sort them by date ascending.
+
+Group by year and insert year dividers (<div class="year-divider">— 2025</div>), as in your current implementation.
+
+For each event, render the card inside #events-container:
+
+html
+
+<article class="event-card">
+  <h3 class="event-title">
+    <a class="event-title-link" href="project-<slug>.html">Title</a>
+  </h3>
+
+  <p class="event-subtitle">Subtitle from JSON</p>
+
+  <p class="event-description">shortDescription from JSON</p>
+
+  <div class="event-footer">
+    <!-- Remind me button (if upcoming + remindEnabled) -->
+    <!-- open project link always -->
+    <!-- meta line: City, DD.MM.YYYY -->
+  </div>
+</article>
+Remind me button:
+
+Show only if:
+
+event.status === "upcoming"
+
+event.remindEnabled === true
+
+and date, city, venue are present.
+
+Use the existing logic from the archive (Google Calendar link, webcal:// on macOS/iOS if icsFile exists).
+
+If not allowed (past event or missing data) → no “Remind me” button on the home page for that event.
+
+The “open project” link always points to project-<slug>.html.
+
+Make sure the final home page looks exactly like now, just with data coming from JSON.
+
+6. Universal project page template (project-<slug>.html)
+Currently you have at least:
+
+project-resonanzraum-rolle.html
+
+project-werkstatthaus-stuttgart.html
+
+You must refactor them to be pure templates driven by events.json.
+
+6.1. Markup pattern
+Each project page should look roughly like this:
+
+html
+
+<main id="main-content" data-project-slug="resonanzraum-rolle">
+  <section class="project-header">
+    <h1 class="project-title" data-project-field="title">Fallback title</h1>
+
+    <p class="project-meta" data-project-field="meta">
+      City, DD.MM.YYYY
+    </p>
+
+    <p class="project-subtitle" data-project-field="subtitle">
+      Fallback subtitle.
+    </p>
+
+    <div class="project-body" data-project-field="body">
+      <!-- JS will create <p class="project-description"> for each body paragraph -->
+    </div>
+  </section>
+
+  <!-- Video block -->
+  <section class="project-media" aria-label="Project video">
+    <div class="project-video">
+      <iframe
+        src="about:blank"
+        title="Project video"
+        loading="lazy"
+        allowfullscreen
+        data-project-video
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- Audio block -->
+  <section class="project-bandcamp" aria-label="Project audio">
+    <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2>
+    <div class="project-bandcamp-embed">
+      <iframe
+        src="about:blank"
+        title="Project audio"
+        loading="lazy"
+        data-project-audio
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- Photo gallery -->
+  <section
+    class="project-gallery"
+    aria-label="Project photos"
+    data-project-photos
+  ></section>
+
+  <p class="project-caption" data-project-field="caption">
+    Fallback caption.
+  </p>
+
+  <!-- Shared Have an Idea? block -->
+
+  <!-- Shared Similar Projects block (see next section) -->
+</main>
+6.2. JS: scripts/project-data.js
+Create or refactor scripts/project-data.js to:
+
+On DOMContentLoaded, detect if the page is a project page:
+
+Look for <main data-project-slug="...">.
+
+Read the slug from data-project-slug.
+
+Fetch data/events.json and find the event with that slug.
+
+Populate:
+
+data-project-field="title" → event.title.
+
+data-project-field="meta" → "City, DD.MM.YYYY" built from event.city + event.date.
+
+data-project-field="subtitle" → event.subtitle.
+
+data-project-field="body":
+
+Clear content.
+
+For each event.body string, append a <p class="project-description">…</p>.
+
+data-project-field="caption" → event.caption.
+
+Media logic:
+
+Videos:
+
+If event.videos exists and has at least one item with embedUrl:
+
+Set iframe[data-project-video].src to the first embedUrl.
+
+Ensure the .project-media section is visible.
+
+Else:
+
+Hide the entire .project-media section (e.g. style.display = 'none').
+
+Audios:
+
+If event.audios exists and has at least one embedUrl:
+
+Set iframe[data-project-audio].src to the first embedUrl.
+
+Ensure .project-bandcamp is visible.
+
+Else:
+
+Hide .project-bandcamp.
+
+Photos:
+
+If event.photos exists and has length > 0:
+
+Clear [data-project-photos].
+
+For each photo:
+
+html
+
+<figure class="project-photo">
+  <img src="..." alt="..." />
+</figure>
+If no photos:
+
+Hide .project-gallery.
+
+Also hide .project-caption.
+
+Remind me on project pages:
+
+On project pages, “Remind me” behavior must be:
+
+If event.status === "upcoming" and remindEnabled === true → you may show a Remind me button in project context if desired (or keep “Remind me” only on index, your choice; user’s preference: for past events Remind me should be disabled).
+
+If status === "past" → no Remind me button on project page.
+
+Design the project pages so the final output matches the current visual look and text, but with this new logic for hiding media when URLs are missing.
+
+7. Similar Projects (only on project pages)
+We want a randomized “Similar Projects” block on project pages, using events.json.
+
+It must appear at the bottom of project pages only.
+
+On impressum.html and privacy.html there should be no Similar Projects block at all.
+
+7.1. Markup on project pages
+At the bottom of each project page:
+
+html
+
+<section class="similar-projects">
+  <h2 class="similar-heading">Similar Projects</h2>
+  <div class="similar-list" data-projects data-projects-limit="2"></div>
+</section>
+7.2. JS behavior
+You can implement Similar Projects logic in project-data.js or a separate JS file.
+
+Requirements:
+
+Use events.json as the source.
+
+On a project page:
+
+From all events, pick N random projects (e.g. 2) that:
+
+Are not the current project (exclude current slug).
+
+Are not duplicates (no repeated project in the list).
+
+Render each as:
+
+html
+
+<article class="similar-card">
+  <h3 class="similar-title">Event title</h3>
+  <p class="similar-meta">City, DD.MM.YYYY</p>
+  <p class="similar-description">shortDescription or subtitle</p>
+  <div class="similar-actions">
+    <!-- if event.status === "upcoming" and remindEnabled: optional Remind me -->
+    <!-- always: open project link -->
+  </div>
+</article>
+It is acceptable if the Similar Projects content is static for each reload (random selection happens on page load).
+
+On Impressum and Privacy:
+
+You must remove the Similar Projects markup or ensure that no Similar Projects section is rendered.
+
+8. Legal JSON: impressum.json, privacy.json, cookies.json
+We want the legal content also to be driven by JSON, but with the same visible texts as now.
+
+8.1. impressum.json
+Create data/impressum.json with a structure that covers:
+
+Basic meta info:
+
+project name, website URL, last updated date.
+
+English column sections:
+
+Responsible for content.
+
+Liability for content.
+
+Liability for external links.
+
+Copyright.
+
+German column sections:
+
+Angaben gemäß § 5 TMG.
+
+Haftung für Inhalte.
+
+Haftung für Links.
+
+Urheberrecht.
+
+You are free to choose a clean JSON schema, e.g.:
+
+json
+
+{
+  "meta": {
+    "name": "fish is watching",
+    "tagline": "Modular Performance Collective",
+    "website": "www.fish-is-watching.com",
+    "lastUpdated": "2025-11-19"
+  },
+  "en": [
+    {
+      "title": "1. Responsible for content",
+      "body": [ "Paragraph 1...", "Paragraph 2..." ]
+    },
+    {
+      "title": "2. Liability for content",
+      "body": [ "..." ]
+    }
+  ],
+  "de": [
+    {
+      "title": "1. Angaben gemäß § 5 TMG",
+      "body": [ "..." ]
+    }
+  ]
+}
+Populate impressum.json with the exact texts from the current impressum.html.
+
+8.2. privacy.json and cookies.json
+Similarly, create:
+
+data/privacy.json for the privacy policy sections (EN & DE).
+
+data/cookies.json specifically for cookies-related text (EN & DE) that you currently have either embedded in Privacy or Cookie statements.
+
+You can either:
+
+Put cookie-specific sections inside privacy.json and have cookies.json as a subset mirror, or
+
+Split cookies into cookies.json and refer to them from privacy JS.
+
+Choose a clear, simple schema, similar to impressum.json, and populate the content from existing privacy.html and any cookie text already present.
+
+8.3. JS: scripts/legal-data.js
+Create a JS file (e.g. scripts/legal-data.js) that:
+
+Detects which legal page is loaded:
+
+impressum.html → <main data-legal-page="impressum">
+
+privacy.html → <main data-legal-page="privacy">
+
+Fetches the appropriate JSON (impressum.json, privacy.json, cookies.json).
+
+Populates the existing legal layout:
+
+For example, markup pattern:
+
+html
+
+<main id="main-content" data-legal-page="impressum">
+  <h1 class="legal-title">Impressum</h1>
+
+  <section class="legal-intro" data-legal-intro></section>
+
+  <section class="legal-page">
+    <div class="legal-columns">
+      <div class="legal-column legal-column-en" data-legal-column="en"></div>
+      <div class="legal-column legal-column-de" data-legal-column="de"></div>
+    </div>
+  </section>
+
+  <!-- Have an Idea? (same layout) -->
+</main>
+Then JS:
+
+Fills .legal-intro from meta in JSON.
+
+Fills [data-legal-column="en"] and "de" with <div class="legal-section"> blocks.
+
+On privacy.html, follow the same pattern but use privacy.json and, if needed, cookies.json for the cookies section.
+
+Again: do not change the actual text, just move it into JSON and render it from there.
+
+9. Have an Idea? & click-to-copy.js
+The “Have an Idea?” section is already implemented and working in your current site. Your tasks:
+
+Keep the same layout and texts (for exhibitions: booking@..., for collaborations: hi@...).
+
+Ensure the click-to-copy behavior still works:
+
+The emails are clickable buttons with data-copy-email="...".
+
+scripts/click-to-copy.js listens for clicks on [data-copy-email], copies the address, and shows minimal feedback (e.g., (click to copy) → (copied) temporarily).
+
+If you refactor click-to-copy.js, output the full updated file.
+
+10. CSS: assets/styles.css
+The archive already contains a working styles.css with the correct look & feel. You may:
+
+Clean it up and re-organize it (base, layout, components, utilities, media queries).
+
+Add styles for any new hooks you introduce (e.g., .project-body, .similar-list[data-projects]).
+
+Fix minor issues (like ensuring button hover uses white text on dark background).
+
+But:
+
+Do not significantly change the visual design or layout.
+
+Ensure all existing classes used in HTML/JS are still styled as expected.
+
+11. Output: full files + update instructions
+You must output the full content of all updated and new files, in this format:
+
+text
+
+=== index.html ===
+```html
+<!-- full, updated index.html here -->
+=== project-resonanzraum-rolle.html ===
+
+html
+
+<!-- full, updated file -->
+=== project-werkstatthaus-stuttgart.html ===
+
+html
+
+<!-- full, updated file -->
+=== impressum.html ===
+
+html
+
+<!-- full, updated file -->
+=== privacy.html ===
+
+html
+
+<!-- full, updated file -->
+=== assets/styles.css ===
+
+css
+
+/* full CSS, including all existing rules + necessary changes */
+=== data/events.json ===
+
+json
+
+{ ... }
+=== data/impressum.json ===
+
+json
+
+{ ... }
+=== data/privacy.json ===
+
+json
+
+{ ... }
+=== data/cookies.json ===
+
+json
+
+{ ... }
+=== scripts/main.js ===
+
+js
+
+// full updated main.js
+=== scripts/project-data.js ===
+
+js
+
+// full project detail logic
+=== scripts/legal-data.js ===
+
+js
+
+// fills Impressum & Privacy from JSON
+=== scripts/click-to-copy.js ===
+
+js
+
+// full updated or original logic
+(Include any other JS file you add or change.)
+
+After listing all files, provide a short “How to update” section explaining:
+
+Which files I should overwrite in my repo.
+
+Where to place new files (e.g. data/*.json, scripts/legal-data.js).
+
+That I just need to commit & push to GitHub → GitHub Pages will serve the updated version.
+
+Remember: all texts must remain exactly the same as in the current live site, just moved to JSON, and the final visuals must match the current design. The only structural differences are:
+
+Project pages are fully data-driven and unified.
+
+Similar Projects is random and shown only on project pages.
+
+Legal content is driven by JSON files, no Similar Projects on Impressum/Privacy.
+
+

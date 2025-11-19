@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // если нет фоток — подпись тоже не нужна
       const caption = document.querySelector('.project-caption');
       if (caption) {
-        caption.style.display = 'block';
+        caption.style.display = 'none';
       }
     }
   }
