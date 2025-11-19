@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (!hasRealImage) {
-      gallerySection.style.display = 'none';
+      gallerySection.style.display = 'block';
 
       // если нет фоток — подпись тоже не нужна
       const caption = document.querySelector('.project-caption');
