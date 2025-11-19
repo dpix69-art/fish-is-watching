@@ -44,82 +44,62 @@
       </div>
     </header>
 
-    <main id="main-content">
-      <!-- PROJECT HEADER -->
+    <main id="main-content" data-project-slug="werkstatthaus-stuttgart">
+      <!-- PROJECT HEADER (заполняется из JSON) -->
       <section class="project-header">
-        <h1 class="project-title">Werkstatthaus Stuttgart</h1>
-        <p class="project-meta">Stuttgart, 28.01.2026</p>
+        <h1 class="project-title" data-project-field="title">
+          Werkstatthaus Stuttgart
+        </h1>
 
-        <p class="project-subtitle">
+        <p class="project-meta" data-project-field="meta">
+          Stuttgart, 28.01.2026
+        </p>
+
+        <p class="project-subtitle" data-project-field="subtitle">
           Live session on resonance, movement, and listening.
         </p>
 
-        <p class="project-description">
-          The session takes place inside Werkstatthaus, a shared space for
-          making, rehearsal, and experiments.
-        </p>
-        <a
-          class="event-button project-remind-button"
-          href="ics/resonanzraum-rolle.ics"
-          download="resonanzraum-rolle.ics"
-        >
-          Remind me
-        </a>
-        <!-- <p class="project-description">
-          Movement and sound are developed together. Performers shift their
-          position in relation to speakers, microphones, and the audience.
-          Small changes in distance open or close parts of the room, revealing
-          new resonances and cancelling others. The piece invites quiet
-          attention: instead of following a fixed dramaturgy, we stay with
-          the slow changes of the space itself.
-        </p> -->
+        <div class="project-body" data-project-field="body">
+          <!-- абзацы из JSON -->
+        </div>
       </section>
 
       <!-- VIDEO BLOCK -->
-      <!-- <section class="project-media" aria-label="Project video">
+      <section class="project-media" aria-label="Project video">
         <div class="project-video">
-         
           <iframe
             src="about:blank"
             title="Werkstatthaus Stuttgart — video documentation"
             loading="lazy"
             allowfullscreen
+            data-project-video
           ></iframe>
         </div>
-      </section> -->
+      </section>
 
       <!-- BANDCAMP BLOCK -->
-      <!-- <section class="project-bandcamp" aria-label="Bandcamp player">
+      <section class="project-bandcamp" aria-label="Bandcamp player">
         <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2>
         <div class="project-bandcamp-embed">
-         
           <iframe
             src="about:blank"
             title="Werkstatthaus Stuttgart — Bandcamp player"
             loading="lazy"
+            data-project-audio
           ></iframe>
         </div>
-      </section> -->
+      </section>
 
       <!-- PHOTO STRIP -->
-      <!-- <section class="project-gallery" aria-label="Project photos">
-        <figure class="project-photo">
-          <img
-            src="assets/werkstatthaus-photo-1.png"
-            alt="Setup with instruments and speakers inside Werkstatthaus Stuttgart"
-          />
-        </figure>
-        <figure class="project-photo">
-          <img
-            src="assets/werkstatthaus-photo-2.png"
-            alt="Performers and audience during the Werkstatthaus Stuttgart session"
-          />
-        </figure>
-      </section> -->
+      <section
+        class="project-gallery"
+        aria-label="Project photos"
+        data-project-photos
+      ></section>
 
-      <!-- <p class="project-caption">
+      <p class="project-caption" data-project-field="caption">
         fish is watching — Werkstatthaus Stuttgart. 28.01.2026.
-      </p> -->
+      </p>
 
       <!-- HAVE AN IDEA? -->
       <section class="idea-section">
@@ -225,6 +205,7 @@
       </div>
     </footer>
 
+    <script type="module" src="scripts/project-data.js" defer></script>
     <script type="module" src="scripts/click-to-copy.js" defer></script>
   </body>
 </html>

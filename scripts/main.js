@@ -23,11 +23,18 @@ function renderEvents(events) {
   const container = document.getElementById('events-container');
   if (!container || !Array.isArray(events)) return;
 
+  // Можно отсортировать по дате
+  const sorted = events.slice().sort((a, b) => {
+    const da = new Date(a.date).getTime();
+    const db = new Date(b.date).getTime();
+    return da - db;
+  });
+
   container.innerHTML = '';
 
   let currentYear = null;
 
-  events.forEach((event) => {
+  sorted.forEach((event) => {
     const year =
       typeof event.year === 'number'
         ? event.year
@@ -41,12 +48,20 @@ function renderEvents(events) {
       currentYear = year;
     }
 
+    const projectUrl = `project-${event.slug}.html`;
+
     const card = document.createElement('article');
     card.className = 'event-card';
 
+    // Заголовок как ссылка на страницу проекта
     const title = document.createElement('h3');
     title.className = 'event-title';
-    title.textContent = event.title;
+
+    const titleLink = document.createElement('a');
+    titleLink.className = 'event-title-link';
+    titleLink.href = projectUrl;
+    titleLink.textContent = event.title;
+    title.appendChild(titleLink);
 
     const subtitle = document.createElement('p');
     subtitle.className = 'event-subtitle';
@@ -61,7 +76,7 @@ function renderEvents(events) {
     const footer = document.createElement('div');
     footer.className = 'event-footer';
 
-    // можно отключить кнопку Remind me через remindEnabled: false
+    // Remind me (можно отключить через remindEnabled: false)
     const remindAllowed =
       event.remindEnabled !== false &&
       event.date &&
@@ -84,7 +99,7 @@ function renderEvents(events) {
 
       let href = gcalLink;
 
-      // webcal-альтернатива для macOS / iOS, если есть icsFile
+      // webcal для macOS / iOS, если есть icsFile
       if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
         href = `webcal://${window.location.host}/${event.icsFile}`;
       }
@@ -99,10 +114,16 @@ function renderEvents(events) {
       footer.appendChild(button);
     }
 
+    // Ссылка open project
+    const openLink = document.createElement('a');
+    openLink.href = projectUrl;
+    openLink.textContent = 'open project';
+    footer.appendChild(openLink);
+
+    // Мета: город + дата
     const meta = document.createElement('p');
     meta.className = 'event-meta';
     meta.textContent = `${event.city}, ${formatDate(event.date)}`;
-
     footer.appendChild(meta);
 
     card.appendChild(title);

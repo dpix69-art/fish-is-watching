@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
-    <!-- HEADER такой же, как на остальных страницах -->
     <header>
       <div class="header-container">
         <a href="index.html" class="header-left header-logo-link">
@@ -45,83 +44,62 @@
       </div>
     </header>
 
-    <main id="main-content">
-      <!-- PROJECT HEADER -->
+    <main id="main-content" data-project-slug="resonanzraum-rolle">
+      <!-- PROJECT HEADER (заполняется из JSON) -->
       <section class="project-header">
-        <h1 class="project-title">Resonanzraum Rolle</h1>
-        <p class="project-meta">Stuttgart, 16.11.2025</p>
+        <h1 class="project-title" data-project-field="title">
+          Resonanzraum Rolle
+        </h1>
 
-        <p class="project-subtitle">
+        <p class="project-meta" data-project-field="meta">
+          Stuttgart, 16.11.2025
+        </p>
+
+        <p class="project-subtitle" data-project-field="subtitle">
           Live performance and recording at the house of Günter Rolle.
         </p>
 
-        <p class="project-description">
-          The session takes place in the space where Günter Rolle once built and
-          played his instruments. The house has its own tone and quiet history.
-          Light, walls, and furniture hold the memory of earlier rehearsals.
-        </p>
-
-        <p class="project-description">
-          We work with this memory as a resonant body. Microphones are placed
-          close to objects and corners, contact mics follow surfaces, and small
-          speakers move sound through the rooms. We listen to how air, wood, and
-          instruments react to each other and let the space decide when the
-          piece begins and ends.
-        </p>
-
-        <!-- Remind me через .ics (можно поменять путь, если нужно) -->
-        <!-- <a
-          class="event-button project-remind-button"
-          href="ics/resonanzraum-rolle.ics"
-          download="resonanzraum-rolle.ics"
-        >
-          Remind me
-        </a> -->
+        <div class="project-body" data-project-field="body">
+          <!-- JS создаст <p class="project-description"> ... -->
+        </div>
       </section>
 
       <!-- VIDEO BLOCK -->
-      <!-- <section class="project-media" aria-label="Project video">
+      <section class="project-media" aria-label="Project video">
         <div class="project-video">
-          
           <iframe
             src="about:blank"
             title="Resonanzraum Rolle — video documentation"
             loading="lazy"
             allowfullscreen
+            data-project-video
           ></iframe>
         </div>
-      </section> -->
+      </section>
 
       <!-- BANDCAMP BLOCK -->
-      <!-- <section class="project-bandcamp" aria-label="Bandcamp player">
+      <section class="project-bandcamp" aria-label="Bandcamp player">
         <h2 class="project-bandcamp-title">Bandcamp player (full size)</h2>
         <div class="project-bandcamp-embed">
-         
           <iframe
             src="about:blank"
             title="Resonanzraum Rolle — Bandcamp player"
             loading="lazy"
+            data-project-audio
           ></iframe>
         </div>
-      </section> -->
-
-      <!-- PHOTO STRIP -->
-      <section class="project-gallery" aria-label="Project photos">
-        <figure class="project-photo">
-          <img
-            src="assets/resonanzraum-photo-1.png"
-            alt="Room with instruments and speakers set up for Resonanzraum Rolle session"
-          />
-        </figure>
-        <figure class="project-photo">
-          <img
-            src="assets/resonanzraum-photo-2.png"
-            alt="Audience listening to the Resonanzraum Rolle performance"
-          />
-        </figure>
       </section>
 
-      <p class="project-caption">
+      <!-- PHOTO STRIP -->
+      <section
+        class="project-gallery"
+        aria-label="Project photos"
+        data-project-photos
+      >
+        <!-- JS создаст figure + img по данным JSON -->
+      </section>
+
+      <p class="project-caption" data-project-field="caption">
         fish is watching — Resonanzraum Rolle. 16.11.2025.
       </p>
 
@@ -156,7 +134,7 @@
         </div>
       </section>
 
-      <!-- SIMILAR PROJECTS (пока статично, как на макете) -->
+      <!-- SIMILAR PROJECTS (пока статично) -->
       <section class="similar-projects">
         <h2 class="similar-heading">Similar Projects</h2>
         <div class="similar-list">
@@ -229,6 +207,7 @@
       </div>
     </footer>
 
+    <script type="module" src="scripts/project-data.js" defer></script>
     <script type="module" src="scripts/click-to-copy.js" defer></script>
   </body>
 </html>
