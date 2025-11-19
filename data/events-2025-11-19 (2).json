@@ -1,0 +1,76 @@
+{
+  "events": [
+    {
+      "slug": "resonanzraum-rolle",
+      "title": "Resonanzraum Rolle",
+      "subtitle": "Live performance and recording at the house of Günter Rolle.",
+      "shortDescription": "Live performance and recording at the house of Günter Rolle. The house has its own tone and quiet history. We listen to how air, wood, and instruments react to each other.",
+      "body": [
+        "The session takes place in the space where Günter Rolle once built and played his instruments. The house has its own tone and quiet history. Light, walls, and furniture hold the memory of earlier rehearsals.",
+        "We work with this memory as a resonant body. We listen to how air, wood, and instruments react to each other and let the space decide when the piece begins and ends."
+      ],
+      "city": "Stuttgart",
+      "date": "2025-11-16",
+      "venue": "Private house",
+      "year": 2025,
+      "status": "past",
+      "remindEnabled": false,
+      "icsFile": "ics/resonanzraum-rolle.ics",
+      "video": {
+        "type": "vimeo",
+        "embedUrl": "about:blank"
+      },
+      "audio": {
+        "type": "bandcamp",
+        "embedUrl": "about:blank"
+      },
+      "photos": [
+        {
+          "src": "assets/resonanzraum-photo-1.png",
+          "alt": "Set up for Resonanzraum Rolle session"
+        },
+        {
+          "src": "assets/resonanzraum-photo-2.png",
+          "alt": "Resonanzraum Rolle performance"
+        }
+      ],
+      "caption": "fish is watching — Resonanzraum Rolle. 16.11.2025."
+    },
+    {
+      "slug": "werkstatthaus-stuttgart",
+      "title": "Werkstatthaus Stuttgart",
+      "subtitle": "Live session on resonance, movement, and listening.",
+      "shortDescription": "Live session on resonance, movement, and listening. Inside Werkstatthaus, sound and movement are explored together. Each small change of position shifts what can be heard. The session invites quiet attention and shared presence.",
+      "body": [
+        "The session takes place inside Werkstatthaus, a shared space for making, rehearsal, and experiments. Tables, tools, and walls are not hidden but become part of the staging. We treat the room as a moving instrument: sound travels between corners, between bodies, and between the different working areas of the house.",
+        "Participants are invited to walk, sit, and listen from different points in the room. Rather than focusing on a single stage, attention moves with them: each listener shapes what they hear by changing their position in relation to speakers, microphones, and the audience. Small changes in distance open or close parts of the room, revealing new resonances and cancelling others. The piece invites quiet attention: instead of following a fixed dramaturgy, we stay with the slow changes of the space itself."
+      ],
+      "city": "Stuttgart",
+      "date": "2026-01-28",
+      "venue": "Werkstatthaus",
+      "year": 2026,
+      "status": "upcoming",
+      "remindEnabled": true,
+      "icsFile": "ics/werkstatthaus-stuttgart.ics",
+      "video": {
+        "type": "vimeo",
+        "embedUrl": "about:blank"
+      },
+      "audio": {
+        "type": "bandcamp",
+        "embedUrl": "about:blank"
+      },
+      "photos": [
+        {
+          "src": "",
+          "alt": ""
+        },
+        {
+          "src": "",
+          "alt": ""
+        }
+      ],
+      "caption": "fish is watching — Werkstatthaus Stuttgart. 28.01.2026."
+    }
+  ]
+}
