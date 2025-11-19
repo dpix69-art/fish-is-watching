@@ -57,7 +57,7 @@ function renderEvents(events) {
     const title = document.createElement('h3');
     title.className = 'event-title';
 
-    const titleLink = document.createElement('a');
+    const titleLink = document.createElement('div');
     titleLink.className = 'event-title-link';
     titleLink.href = projectUrl;
     titleLink.textContent = event.title;
