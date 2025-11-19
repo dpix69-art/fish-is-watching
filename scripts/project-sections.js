@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===== PHOTO GALLERY =====
   const gallerySection = document.querySelector('.project-gallery');
   if (gallerySection) {
-    const images = Array.from(gallerySection.querySelectorAll('img'));
+    const images = Array.from(gallerySection.querySelectorAll('photos'));
 
     const hasRealImage = images.some((img) => {
       const src = img.getAttribute('src');
@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (!hasRealImage) {
-      gallerySection.style.display = 'block';
+      gallerySection.style.display = 'flex';
 
       // если нет фоток — подпись тоже не нужна
       const caption = document.querySelector('.project-caption');
       if (caption) {
-        caption.style.display = 'none';
+        caption.style.display = 'block';
       }
     }
   }
