@@ -130,6 +130,26 @@
     <!-- 100% privacy-first analytics -->
     <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 
+<!-- cookies -->
+<div id="cookie-banner" class="cookie-banner">
+  <p>
+    We use simple, privacy-friendly analytics (no tracking cookies). By continuing, you accept our use of essential cookies.
+  </p>
+  <button id="cookie-accept">OK</button>
+</div>
+
+<script>
+  // show banner only if no consent found
+  if (!localStorage.getItem("cookiesAccepted")) {
+    document.getElementById("cookie-banner").style.display = "flex";
+  }
+
+  document.getElementById("cookie-accept").addEventListener("click", function () {
+    localStorage.setItem("cookiesAccepted", "true");
+    document.getElementById("cookie-banner").style.display = "none";
+  });
+</script>
+
   </body>
 </html>
   
