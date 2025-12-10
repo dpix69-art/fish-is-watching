@@ -69,7 +69,14 @@ async function loadProjectData() {
   // Видео
   const videoFrame = main.querySelector('[data-project-video]');
   if (videoFrame && event.video && event.video.embedUrl) {
+    // сюда подставляем уже нормальный embedUrl из JSON
     videoFrame.src = event.video.embedUrl;
+
+    // принудительно показываем секцию, если она вдруг была скрыта
+    const mediaSection = videoFrame.closest('.project-media');
+    if (mediaSection) {
+      mediaSection.style.display = 'block';
+    }
   }
 
   // Аудио / Bandcamp
