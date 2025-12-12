@@ -756,7 +756,7 @@ footer {
   margin-top: 16px;
   margin-left: -8px;
   border: #050405 1px solid;
-}
+  background-color: #050405;}
 
 .b-container {
   /* flex-direction: column;
