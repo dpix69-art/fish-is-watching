@@ -116,7 +116,7 @@ function buildMediaPreview(event) {
   const label = createEl('p', 'event-media-title');
 
   if (hasVideo) {
-    label.textContent = 'Watch';
+    label.textContent = 'Watch on YouTube';
     media.appendChild(label);
     media.appendChild(buildVideoPreview(event.video.embedUrl));
     return media;
