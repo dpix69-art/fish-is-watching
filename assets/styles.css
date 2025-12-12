@@ -438,9 +438,9 @@ footer {
 
 .project-bandcamp-embed iframe {
   width: 100%;
-  min-height: 200px;
+  min-height: 42px;
   border: 0;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
 }
 
 .project-gallery {
