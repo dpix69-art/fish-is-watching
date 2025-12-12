@@ -397,31 +397,31 @@ main {
   background: #f2f2f2;
 }
 
-/* Play circle */
+/* Centered play button */
 .event-video-preview::after {
   content: "";
   width: 54px;
   height: 54px;
   border-radius: 999px;
   position: absolute;
-  left: 12px;
-  bottom: 12px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
 }
 
-/* Play triangle */
 .event-video-preview::before {
   content: "";
   position: absolute;
-  left: 32px;
-  bottom: 28px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-35%, -50%); /* slight right shift to visually center the triangle */
   width: 0;
   height: 0;
   border-left: 14px solid rgba(255, 255, 255, 0.95);
   border-top: 9px solid transparent;
   border-bottom: 9px solid transparent;
-  transform: translate(-50%, 50%);
 }
 
 /* Bandcamp compact player */
