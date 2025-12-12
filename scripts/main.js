@@ -37,8 +37,10 @@ function getYouTubeIdFromEmbedUrl(embedUrl) {
  * Note: YouTube still may show some overlays; full removal is not possible.
  */
 function withQuietYouTubeParams(embedUrl) {
+  // Keep controls so the user can manage audio.
+  // Remove autoplay+mute to avoid confusing "silent" playback in some browsers.
   const params =
-    'autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1';
+    'controls=1&modestbranding=1&rel=0&playsinline=1';
 
   return embedUrl.includes('?') ? `${embedUrl}&${params}` : `${embedUrl}?${params}`;
 }
