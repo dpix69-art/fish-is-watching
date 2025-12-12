@@ -155,6 +155,49 @@ function renderEvents(events) {
     card.appendChild(title);
     card.appendChild(subtitle);
     card.appendChild(description);
+    // ===== MEDIA PREVIEW (video > audio) =====
+const hasVideo =
+  event.video &&
+  typeof event.video.embedUrl === 'string' &&
+  event.video.embedUrl.trim() !== '' &&
+  event.video.embedUrl !== 'about:blank';
+
+const hasAudio =
+  event.audio &&
+  typeof event.audio.embedUrl === 'string' &&
+  event.audio.embedUrl.trim() !== '' &&
+  event.audio.embedUrl !== 'about:blank';
+
+if (hasVideo || hasAudio) {
+  const media = document.createElement('div');
+  media.className = 'event-media';
+
+  const label = document.createElement('p');
+  label.className = 'event-media-title';
+
+  const iframe = document.createElement('iframe');
+  iframe.loading = 'lazy';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+  if (hasVideo) {
+    label.textContent = 'Watch';
+    iframe.className = 'event-video';
+    iframe.src = event.video.embedUrl;
+    iframe.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+  } else {
+    label.textContent = 'Listen on Bandcamp';
+    iframe.className = 'event-bandcamp';
+    iframe.src = event.audio.embedUrl;
+    iframe.setAttribute('seamless', 'seamless');
+  }
+
+  media.appendChild(label);
+  media.appendChild(iframe);
+  card.appendChild(media);
+}
+
     card.appendChild(footer);
 
     container.appendChild(card);
