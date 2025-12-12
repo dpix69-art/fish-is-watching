@@ -903,3 +903,9 @@ footer {
   background: #fff;
   color: #000;
 }
+
+.project-bandcamp iframe {
+  width: 100%;
+  height: 42px; /* small bandcamp player 42 */
+  border: 0;
+}

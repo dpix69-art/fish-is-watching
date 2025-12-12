@@ -81,10 +81,15 @@ async function loadProjectData() {
 
   // Аудио / Bandcamp
   const audioFrame = main.querySelector('[data-project-audio]');
-  if (audioFrame && event.audio && event.audio.embedUrl) {
-    audioFrame.src = event.audio.embedUrl;
-  }
+if (audioFrame && event.audio && event.audio.embedUrl) {
+  audioFrame.src = event.audio.embedUrl;
 
+  // принудительно показываем секцию (как у видео)
+  const audioSection = audioFrame.closest('.project-bandcamp');
+  if (audioSection) {
+    audioSection.style.display = 'block';
+  }
+}
   // Фотогалерея
   const photosContainer = main.querySelector('[data-project-photos]');
   if (photosContainer && Array.isArray(event.photos)) {
