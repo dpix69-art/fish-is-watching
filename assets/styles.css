@@ -400,19 +400,6 @@ main {
 /* Centered play button */
 .event-video-preview::after {
   content: "";
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-}
-
-.event-video-preview::before {
-  content: "";
   position: absolute;
   left: 50%;
   top: 50%;
@@ -422,6 +409,19 @@ main {
   border-left: 14px solid rgba(255, 255, 255, 0.95);
   border-top: 9px solid transparent;
   border-bottom: 9px solid transparent;
+}
+
+.event-video-preview::before {
+  content: "";
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
 }
 
 /* Bandcamp compact player */
