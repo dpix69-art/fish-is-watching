@@ -1,3 +1,7 @@
+/* ============================
+   Base / Reset
+   ============================ */
+
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
@@ -24,6 +28,7 @@ body {
   min-height: 100vh;
 }
 
+/* Skip link */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -39,10 +44,10 @@ body {
   top: 0;
 }
 
+/* Links */
 a {
   color: #050405;
   font-size: 16px;
-  /* text-decoration: underline; */
   text-decoration: none;
 }
 
@@ -55,6 +60,10 @@ a:focus-visible {
   outline: 2px solid #666666;
   outline-offset: 2px;
 }
+
+/* ============================
+   Header
+   ============================ */
 
 header {
   padding: 48px 32px;
@@ -73,13 +82,25 @@ header {
   flex: 1;
 }
 
+/* Make the logo area clickable without changing layout */
+.header-logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.header-logo-link:hover .site-title,
+.header-logo-link:hover .site-tagline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
 .site-title {
   font-size: 24px;
   font-style: italic;
   font-weight: 400;
   line-height: 1.5;
   margin-bottom: 4px;
-  /* margin-top: 40px; */
 }
 
 .site-tagline {
@@ -95,7 +116,6 @@ header {
   gap: 24px;
   font-size: 20px;
   font-style: italic;
-  /* text-decoration: underline; */
 }
 
 .header-nav a {
@@ -107,11 +127,19 @@ header {
   color: #666666;
 }
 
+/* ============================
+   Layout
+   ============================ */
+
 main {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 64px;
 }
+
+/* ============================
+   Hero
+   ============================ */
 
 .hero {
   padding: 80px 0 120px;
@@ -141,7 +169,6 @@ main {
   font-size: 40px;
   font-weight: 400;
   line-height: 1.2;
-  /* margin: 80px 0 0 0; */
 }
 
 .button {
@@ -153,7 +180,6 @@ main {
   padding: 8px 32px;
   border-radius: 9999px;
   font-size: 20px;
-  /* font-style: italic; */
   font-weight: 300;
   text-decoration: none;
   border: none;
@@ -188,7 +214,6 @@ main {
   margin-top: -16px;
 }
 
-
 .b-container {
   display: flex;
   flex-direction: row;
@@ -197,13 +222,11 @@ main {
   align-items: flex-end;
 }
 
-
 .hero-right {
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding-top: 8px;
-  /* margin-left: 100px; */
 }
 
 .manifest {
@@ -229,6 +252,10 @@ main {
 .tech-rider-link:hover {
   color: #050405;
 }
+
+/* ============================
+   Schedule / Events (Homepage)
+   ============================ */
 
 .schedule {
   padding: 80px 0;
@@ -257,6 +284,16 @@ main {
   font-weight: 400;
   line-height: 1.2;
   margin-bottom: 16px;
+}
+
+.event-title-link {
+  color: inherit;
+  text-decoration: none;
+  font: inherit;
+}
+
+.event-title-link:hover {
+  text-decoration: none;
 }
 
 .event-subtitle {
@@ -289,7 +326,7 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: #ffffff;
   color: #050405;
   padding: 8px 24px;
   border-radius: 9999px;
@@ -306,10 +343,98 @@ main {
   margin-left: -4px;
 }
 
+/* Improve hover state for event buttons (contrast) */
 .event-button:hover {
   background-color: #050405;
+  color: #ffffff;
   text-decoration: none;
 }
+
+/* --- Homepage media preview (thumbnail -> click -> iframe) --- */
+
+.event-media {
+  margin: 8px 0 16px;
+  max-width: 570px; /* matches .event-description width */
+}
+
+.event-media-title {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  font-style: italic;
+  color: #666666;
+}
+
+/* Fixed 16:9 frame to avoid layout shifts */
+.event-media-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+
+.event-media-frame > iframe,
+.event-media-frame > button {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Thumbnail button */
+.event-video-preview {
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.event-video-preview--empty {
+  background: #f2f2f2;
+}
+
+/* Play circle */
+.event-video-preview::after {
+  content: "";
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+/* Play triangle */
+.event-video-preview::before {
+  content: "";
+  position: absolute;
+  left: 32px;
+  bottom: 28px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid rgba(255, 255, 255, 0.95);
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  transform: translate(-50%, 50%);
+}
+
+/* Bandcamp compact player */
+.event-bandcamp {
+  width: 100%;
+  height: 42px;
+  border: 0;
+  background-color: #ffffff;
+}
+
+/* ============================
+   Quote
+   ============================ */
 
 .quote {
   margin-right: 250px;
@@ -341,6 +466,10 @@ cite {
   color: #666666;
 }
 
+/* ============================
+   Footer
+   ============================ */
+
 footer {
   padding: 64px 32px 48px;
   max-width: 1440px;
@@ -364,6 +493,13 @@ footer {
   font-size: 16px;
   color: #666666;
   margin: 0 auto;
+}
+
+/* Footer tweak for legal links */
+.copyright a {
+  margin-left: 8px;
+  font-style: italic;
+  font-size: 14px;
 }
 
 /* ============================
@@ -403,7 +539,6 @@ footer {
 .project-description {
   font-size: 16px;
   line-height: 1.6;
-  /* max-width: 570px; */
   max-width: 650px;
 }
 
@@ -414,7 +549,7 @@ footer {
 .project-video {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* 16:9 */
+  padding-top: 56.25%;
   background-color: #f2f2f2;
 }
 
@@ -436,9 +571,10 @@ footer {
   margin-bottom: 16px;
 }
 
-.project-bandcamp-embed iframe {
+/* Keep the Bandcamp player compact on project pages */
+.project-bandcamp iframe {
   width: 100%;
-  min-height: 42px;
+  height: 42px;
   border: 0;
   background-color: #ffffff;
 }
@@ -634,13 +770,38 @@ footer {
 }
 
 /* ============================
-   Footer tweak for legal links
+   Cookie banner
    ============================ */
 
-.copyright a {
-  margin-left: 8px;
-  font-style: italic;
+.cookie-banner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #ffffff;
   font-size: 14px;
+  line-height: 1.5;
+  z-index: 9999;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cookie-banner button {
+  background: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 4px 14px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cookie-banner button:hover {
+  background: #ffffff;
+  color: #000000;
 }
 
 /* ============================
@@ -651,9 +812,97 @@ footer {
   .project-header {
     padding-top: 64px;
   }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+
+  .hero-headline {
+    font-size: 36px;
+  }
+
+  .manifest {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 768px) {
+  header {
+    padding: 32px 24px;
+  }
+
+  .header-container {
+    flex-direction: column;
+  }
+
+  main {
+    padding: 0 24px;
+  }
+
+  .hero {
+    padding: 48px 0 80px;
+  }
+
+  .hero-headline {
+    font-size: 32px;
+  }
+
+  .manifest {
+    font-size: 20px;
+    max-width: 300px;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    min-height: 44px;
+    width: fit-content;
+    margin-top: 16px;
+    margin-left: -8px;
+    border: #050405 1px solid;
+    background-color: #050405;
+  }
+
+  .b-container {
+    display: block;
+  }
+
+  #copyBooking {
+    background-color: #050405;
+  }
+
+  .tech-rider-link {
+    display: block;
+    font-size: 16px;
+    color: #666666;
+    padding-top: 24px;
+  }
+
+  .event-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quote {
+    justify-content: flex-start;
+    margin-right: 0;
+  }
+
+  blockquote {
+    text-align: left;
+  }
+
+  footer {
+    padding: 48px 24px 32px;
+  }
+
+  .footer-nav {
+    flex-wrap: wrap;
+  }
+
   .project-gallery {
     flex-direction: column;
   }
@@ -684,122 +933,6 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .project-header {
-    padding-top: 48px;
-  }
-
-  .project-caption {
-    margin-bottom: 64px;
-  }
-
-  .idea-section {
-    padding-top: 64px;
-    padding-bottom: 56px;
-  }
-
-  .similar-projects {
-    padding-top: 48px;
-    padding-bottom: 72px;
-  }
-}
-
-
-@media (max-width: 1024px) {
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: 64px;
-  }
-
-  .hero-headline {
-    font-size: 36px;
-  }
-
-  .manifest {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  header {
-    padding: 32px 24px;
-  }
-
-  .header-container {
-    flex-direction: column;
-    /* gap: 24px; */
-  }
-
-  main {
-    padding: 0 24px;
-  }
-
-  .hero {
-    padding: 48px 0 80px;
-  }
-
-  .hero-headline {
-    font-size: 32px;
-  }
-
-  .manifest {
-    font-size: 20px;
-    max-width: 300px;
-  }
-
-  .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  min-height: 44px;
-  width: fit-content;
-  margin-top: 16px;
-  margin-left: -8px;
-  border: #050405 1px solid;
-  background-color: #050405;}
-
-.b-container {
-  /* flex-direction: column;
-  gap: 16px; */
-  display: block;
-}
-
-#copyBooking {
-  background-color: #050405;
-}
-
-.tech-rider-link {
-    display: block;
-    font-size: 16px;
-    color: #666666;
-    /* text-decoration: underline; */
-    padding-top: 24px;
-  }
-
-  .event-footer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .quote {
-    justify-content: flex-start;
-    margin-right: 0 ;
-  }
-
-  blockquote {
-    text-align: left;
-  }
-
-  footer {
-    padding: 48px 24px 32px;
-  }
-
-  .footer-nav {
-    flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 480px) {
   header {
     padding: 24px 16px;
   }
@@ -820,7 +953,6 @@ footer {
     display: block;
     font-size: 16px;
     color: #666666;
-    /* text-decoration: underline; */
     padding-top: 24px;
   }
 
@@ -836,6 +968,24 @@ footer {
   footer {
     padding: 40px 16px 24px;
   }
+
+  .project-header {
+    padding-top: 48px;
+  }
+
+  .project-caption {
+    margin-bottom: 64px;
+  }
+
+  .idea-section {
+    padding-top: 64px;
+    padding-bottom: 56px;
+  }
+
+  .similar-projects {
+    padding-top: 48px;
+    padding-bottom: 72px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -844,111 +994,4 @@ footer {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-/* Make the logo area clickable without changing layout */
-.header-logo-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.header-logo-link:hover .site-title,
-.header-logo-link:hover .site-tagline {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-}
-.event-title-link {
-  color: inherit;
-  text-decoration: none;
-  font: inherit;
-}
-
-.event-title-link:hover {
-  text-decoration: none;
-}
-/* Improve hover state for event buttons (contrast) */
-.event-button:hover {
-  background-color: #050405;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.cookie-banner {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 16px 20px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
-  font-size: 14px;
-  line-height: 1.5;
-  z-index: 9999;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.cookie-banner button {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff;
-  padding: 4px 14px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.cookie-banner button:hover {
-  background: #fff;
-  color: #000;
-}
-
-.project-bandcamp iframe {
-  width: 100%;
-  height: 42px; /* small bandcamp player 42 */
-  border: 0;
-}
-.event-video-preview {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border: 0;
-  padding: 0;
-  display: block;
-  cursor: pointer;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-.event-video-preview--empty {
-  background: #f2f2f2;
-}
-
-/* play circle */
-.event-video-preview::after {
-  content: "";
-  width: 54px;
-  height: 54px;
-  border-radius: 999px;
-  position: absolute;
-  left: 12px;
-  bottom: 12px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
-}
-
-/* triangle */
-.event-video-preview::before {
-  content: "";
-  position: absolute;
-  left: 32px;
-  bottom: 28px;
-  width: 0;
-  height: 0;
-  border-left: 14px solid rgba(255, 255, 255, 0.95);
-  border-top: 9px solid transparent;
-  border-bottom: 9px solid transparent;
-  transform: translate(-50%, 50%);
 }

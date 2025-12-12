@@ -1,9 +1,9 @@
 // ============================
-// Helpers
+// Utilities
 // ============================
 
-function isNonEmptyString(v) {
-  return typeof v === 'string' && v.trim() !== '';
+function isNonEmptyString(value) {
+  return typeof value === 'string' && value.trim() !== '';
 }
 
 function isValidEmbedUrl(url) {
@@ -22,24 +22,21 @@ function formatDate(dateString) {
 }
 
 /**
- * Extract YouTube video ID from an embed URL like:
+ * Extract YouTube video ID from embed URLs like:
  * - https://www.youtube.com/embed/VIDEO_ID
  * - https://www.youtube-nocookie.com/embed/VIDEO_ID
  */
 function getYouTubeIdFromEmbedUrl(embedUrl) {
   if (!isNonEmptyString(embedUrl)) return null;
-  const m = embedUrl.match(/\/embed\/([^?&#/]+)/);
-  return m ? m[1] : null;
+  const match = embedUrl.match(/\/embed\/([^?&#/]+)/);
+  return match ? match[1] : null;
 }
 
-function withYouTubeParams(embedUrl) {
-  // максимально "тихо":
-  // controls=0 — без панели
-  // modestbranding=1 — меньше брендинга
-  // rel=0 — меньше "чужих" рекомендаций
-  // playsinline=1 — без полноэкранного прыжка на мобилке
-  // autoplay=1 — чтобы клик реально запускал
-  // mute=1 — часто нужно для autoplay в браузерах
+/**
+ * Add params to reduce UI noise in YouTube iframe.
+ * Note: YouTube still may show some overlays; full removal is not possible.
+ */
+function withQuietYouTubeParams(embedUrl) {
   const params =
     'autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1';
 
@@ -54,37 +51,43 @@ function createEl(tag, className, text) {
 }
 
 // ============================
-// Media preview builders
+// Media preview (homepage cards)
 // ============================
 
+/**
+ * Fixed-size 16:9 frame:
+ * thumbnail button -> click -> iframe
+ * No layout shift (same container size).
+ */
 function buildVideoPreview(embedUrl) {
-  const videoId = getYouTubeIdFromEmbedUrl(embedUrl);
+  const frame = createEl('div', 'event-media-frame');
 
   const btn = createEl('button', 'event-video-preview');
   btn.type = 'button';
-  btn.setAttribute('aria-label', 'Play video preview');
+  btn.setAttribute('aria-label', 'Play video');
 
-  // thumbnail сразу — мгновенный "смысл" для куратора
+  const videoId = getYouTubeIdFromEmbedUrl(embedUrl);
   if (videoId) {
     btn.style.backgroundImage = `url("https://i.ytimg.com/vi/${videoId}/hqdefault.jpg")`;
   } else {
-    // если ID не распарсился — хотя бы нейтральный фон
     btn.classList.add('event-video-preview--empty');
   }
 
   btn.addEventListener('click', () => {
-    const iframe = createEl('iframe', 'event-video');
+    const iframe = document.createElement('iframe');
     iframe.loading = 'lazy';
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.src = withYouTubeParams(embedUrl);
+    iframe.src = withQuietYouTubeParams(embedUrl);
     iframe.allow =
       'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowFullscreen = true;
 
-    btn.replaceWith(iframe);
+    frame.innerHTML = '';
+    frame.appendChild(iframe);
   });
 
-  return btn;
+  frame.appendChild(btn);
+  return frame;
 }
 
 function buildBandcampEmbed(embedUrl) {
@@ -97,8 +100,9 @@ function buildBandcampEmbed(embedUrl) {
 }
 
 /**
- * One preview per card to keep homepage light:
- * priority: video > audio
+ * Homepage rule:
+ * Render only one preview per card to keep the page fast.
+ * Priority: video -> audio
  */
 function buildMediaPreview(event) {
   const hasVideo = event.video && isValidEmbedUrl(event.video.embedUrl);
@@ -116,7 +120,6 @@ function buildMediaPreview(event) {
     return media;
   }
 
-  // audio
   label.textContent = 'Listen on Bandcamp';
   media.appendChild(label);
   media.appendChild(buildBandcampEmbed(event.audio.embedUrl));
@@ -124,7 +127,7 @@ function buildMediaPreview(event) {
 }
 
 // ============================
-// Card builder
+// Event card builder
 // ============================
 
 function buildEventCard(event) {
@@ -174,7 +177,7 @@ function buildEventCard(event) {
 
     let href = gcalLink;
 
-    // webcal для macOS / iOS, если есть .ics
+    // webcal for macOS / iOS if .ics file exists
     if (event.icsFile && /Mac|iPhone|iPad/.test(navigator.platform)) {
       href = `webcal://${window.location.host}/${event.icsFile}`;
     }
@@ -187,7 +190,7 @@ function buildEventCard(event) {
     footer.appendChild(button);
   }
 
-  // Open project link
+  // "open project" link
   const openLink = createEl('a', 'event-open-link', 'open project');
   openLink.href = projectUrl;
   footer.appendChild(openLink);
@@ -211,7 +214,7 @@ function buildEventCard(event) {
 }
 
 // ============================
-// Render
+// Rendering
 // ============================
 
 function renderEvents(events) {
@@ -221,8 +224,8 @@ function renderEvents(events) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Фильтруем только будущие события (и past/upcoming по флагу)
-  const upcoming = events.filter((event) => {
+  // Keep events by status/date rules
+  const filtered = events.filter((event) => {
     if (event.status === 'past') return true;
     if (event.status === 'upcoming') return true;
 
@@ -233,16 +236,9 @@ function renderEvents(events) {
     return d >= today;
   });
 
-  if (upcoming.length === 0) {
-    container.innerHTML = '';
-    return;
-  }
-
-  // Сортировка по дате
-  const sorted = upcoming.slice().sort((a, b) => {
-    const da = new Date(a.date).getTime();
-    const db = new Date(b.date).getTime();
-    return da - db;
+  // Sort by date
+  const sorted = filtered.slice().sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime();
   });
 
   container.innerHTML = '';
