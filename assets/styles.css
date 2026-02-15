@@ -810,8 +810,8 @@ footer {
    ============================ */
 
 .weekly-session {
-  padding: 80px 0;
-  border-top: 1px solid #f2f2f2;
+  /* padding: 80px 0;
+  border-top: 1px solid #f2f2f2; */
 }
 
 .weekly-session-heading {
@@ -822,7 +822,7 @@ footer {
 }
 
 .weekly-session-body {
-  max-width: 570px;
+  /* max-width: 570px; */
 }
 
 .weekly-session-body p {
@@ -837,7 +837,7 @@ footer {
 
 .weekly-session-player iframe {
   width: 100%;
-  height: 120px;
+  height: 180px;
   border: 0;
   background-color: #ffffff;
 }
